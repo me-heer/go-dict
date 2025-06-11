@@ -1,0 +1,51 @@
+{{if .Error}}
+<div class="error-card">
+	{{.Error}}
+</div>
+{{else if .Results}}
+<div class="results-container">
+	{{$entry := index .Results 0}}
+	<div class="word-card">
+		<div class="word-header">
+			<h2 class="word-title">{{$entry.Word}}</h2>
+			{{if $entry.Phonetic}}
+			<span class="phonetic">{{$entry.Phonetic}}</span>
+			{{end}}
+		</div>
+
+		{{range $entry.Phonetics}}
+		{{if .Audio}}
+		<div class="audio-container">
+			<audio controls src="{{.Audio}}">
+				Your browser does not support the audio element.
+			</audio>
+		</div>
+		{{break}}
+		{{end}}
+		{{end}}
+
+		{{range $entry.Meanings}}
+		<div class="meaning-section">
+			<h3 class="part-of-speech">{{.PartOfSpeech}}</h3>
+			<ol class="definitions-list">
+				{{range .Definitions}}
+				<li class="definition-item">
+					<p class="definition">{{.Definition}}</p>
+					{{if .Example}}
+					<p class="example">"{{.Example}}"</p>
+					{{end}}
+					{{if .Synonyms}}
+					<div class="synonyms">
+						<span class="label">Synonyms: </span>
+						<span>{{range $i, $syn := .Synonyms}}{{if $i}},
+							{{end}}{{$syn}}{{end}}</span>
+					</div>
+					{{end}}
+				</li>
+				{{end}}
+			</ol>
+		</div>
+		{{end}}
+	</div>
+</div>
+{{end}}

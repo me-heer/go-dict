@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<title>Dictionary</title>
+	<link rel="stylesheet" href="/static/style.css">
+	<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<meta name="color-scheme" content="light dark">
+</head>
+
+<body>
+	<main class="container" id="main-container">
+		<div class="search-section">
+			<form hx-post="/search" hx-target="#results" hx-indicator="#loading" class="search-form">
+				<div class="search-container">
+					<svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2">
+						<circle cx="11" cy="11" r="8"></circle>
+						<path d="m21 21-4.35-4.35"></path>
+					</svg>
+					<input type="text" name="word" placeholder="Type for a word and hit enter..."
+						autofocus required>
+				</div>
+			</form>
+
+			<div id="loading" class="htmx-indicator loading">
+				Searching...
+			</div>
+		</div>
+
+		<div id="results">
+			<!-- Results will be loaded here -->
+		</div>
+	</main>
+
+	<script>
+		// Ensure the input is focused when the page loads
+		document.addEventListener('DOMContentLoaded', function () {
+			const wordInput = document.querySelector('input[name="word"]');
+			if (wordInput) {
+				wordInput.focus();
+			}
+		});
+
+		// Handle layout changes when results are shown/hidden
+		document.body.addEventListener('htmx:afterRequest', function (event) {
+			const container = document.getElementById('main-container');
+			const results = document.getElementById('results');
+			const wordInput = document.querySelector('input[name="word"]');
+
+			if (event.detail.xhr.status === 200) {
+				// Check if results contain content
+				if (results && results.innerHTML.trim()) {
+					container.classList.add('has-results');
+				} else {
+					container.classList.remove('has-results');
+				}
+
+				// Re-focus the input
+				if (wordInput) {
+					setTimeout(() => wordInput.focus(), 100);
+				}
+			}
+		});
+
+		// Clear results and return to center when input is cleared
+		document.addEventListener('input', function (event) {
+			if (event.target.name === 'word' && event.target.value === '') {
+				const container = document.getElementById('main-container');
+				const results = document.getElementById('results');
+				container.classList.remove('has-results');
+				if (results) {
+					results.innerHTML = '';
+				}
+			}
+		});
+	</script>
+</body>
+
+</html>
