@@ -38,13 +38,18 @@ type PageData struct {
 	Results []DictionaryEntry
 	Error   string
 	Query   string
+	History []string
 }
 
 var templates = template.Must(template.ParseGlob("templates/*.html"))
 
+// In-memory session storage (in production, use proper session management)
+var sessionHistory = make(map[string][]string)
+
 func main() {
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/search", searchHandler)
+	http.HandleFunc("/history", historyHandler)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
 
 	fmt.Println("Server starting on :8080")
@@ -52,7 +57,12 @@ func main() {
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	data := PageData{}
+	sessionID := getSessionID(r)
+	history := sessionHistory[sessionID]
+
+	data := PageData{
+		History: history,
+	}
 	templates.ExecuteTemplate(w, "index.html", data)
 }
 
@@ -67,6 +77,11 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 		templates.ExecuteTemplate(w, "results.html", PageData{Error: "Please enter a word"})
 		return
 	}
+
+	sessionID := getSessionID(r)
+
+	// Add to history if not already present
+	addToHistory(sessionID, query)
 
 	// Fetch from dictionary API
 	apiURL := fmt.Sprintf("https://api.dictionaryapi.dev/api/v2/entries/en/%s", url.QueryEscape(query))
@@ -99,4 +114,41 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	templates.ExecuteTemplate(w, "results.html", data)
+}
+
+func historyHandler(w http.ResponseWriter, r *http.Request) {
+	sessionID := getSessionID(r)
+	history := sessionHistory[sessionID]
+
+	data := PageData{
+		History: history,
+	}
+
+	templates.ExecuteTemplate(w, "history.html", data)
+}
+
+func getSessionID(r *http.Request) string {
+	// Simple session ID based on IP and User-Agent (in production, use proper session management)
+	return r.RemoteAddr + r.UserAgent()
+}
+
+func addToHistory(sessionID, word string) {
+	history := sessionHistory[sessionID]
+
+	// Check if word already exists in history
+	for _, w := range history {
+		if strings.EqualFold(w, word) {
+			return // Don't add duplicates
+		}
+	}
+
+	// Add to beginning of history (most recent first)
+	history = append([]string{word}, history...)
+
+	// Keep only last 10 searches
+	if len(history) > 10 {
+		history = history[:10]
+	}
+
+	sessionHistory[sessionID] = history
 }

@@ -1,0 +1,21 @@
+{{if .History}}
+<div class="vocabulary-section">
+	<button id="vocabulary-toggle" class="vocabulary-toggle">
+		<span>Current Session Vocabulary</span>
+		<svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+			stroke-width="2">
+			<polyline points="6 9 12 15 18 9"></polyline>
+		</svg>
+	</button>
+	<div id="vocabulary-list" class="vocabulary-list hidden">
+		<div class="history-list">
+			{{range .History}}
+			<button class="history-item" onclick="searchWord('{{.}}')">{{.}}</button>
+			{{end}}
+		</div>
+		<button class="clear-history-btn" hx-post="/history" hx-target="#history-container" hx-swap="innerHTML">
+			Clear All
+		</button>
+	</div>
+</div>
+{{end}}

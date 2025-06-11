@@ -15,15 +15,16 @@
 <body>
 	<main class="container" id="main-container">
 		<div class="search-section">
-			<form hx-post="/search" hx-target="#results" hx-indicator="#loading" class="search-form">
+			<form hx-post="/search" hx-target="#results" hx-indicator="#loading"
+				hx-trigger="submit, keyup[keyCode==13]" class="search-form">
 				<div class="search-container">
 					<svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
 						stroke="currentColor" stroke-width="2">
 						<circle cx="11" cy="11" r="8"></circle>
 						<path d="m21 21-4.35-4.35"></path>
 					</svg>
-					<input type="text" name="word" placeholder="Type for a word and hit enter..."
-						autofocus required>
+					<input type="text" name="word" placeholder="Search for a word..." autofocus
+						required>
 				</div>
 			</form>
 
@@ -31,6 +32,29 @@
 				Searching...
 			</div>
 		</div>
+
+		{{if .History}}
+		<div class="vocabulary-section">
+			<button id="vocabulary-toggle" class="vocabulary-toggle">
+				<span>Your Vocabulary</span>
+				<svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2">
+					<polyline points="6 9 12 15 18 9"></polyline>
+				</svg>
+			</button>
+			<div id="vocabulary-list" class="vocabulary-list hidden">
+				<div class="history-list">
+					{{range .History}}
+					<button class="history-item" onclick="searchWord('{{.}}')">{{.}}</button>
+					{{end}}
+				</div>
+				<button class="clear-history-btn" hx-post="/history" hx-target="#history-container"
+					hx-swap="innerHTML">
+					Clear All
+				</button>
+			</div>
+		</div>
+		{{end}}
 
 		<div id="results">
 			<!-- Results will be loaded here -->
@@ -44,9 +68,20 @@
 			if (wordInput) {
 				wordInput.focus();
 			}
+
+			// Set up vocabulary toggle
+			const toggleBtn = document.getElementById('vocabulary-toggle');
+			const vocabularyList = document.getElementById('vocabulary-list');
+
+			if (toggleBtn && vocabularyList) {
+				toggleBtn.addEventListener('click', function () {
+					vocabularyList.classList.toggle('hidden');
+					toggleBtn.classList.toggle('active');
+				});
+			}
 		});
 
-		// Handle layout changes when results are shown/hidden
+		// Handle layout changes when results are shown
 		document.body.addEventListener('htmx:afterRequest', function (event) {
 			const container = document.getElementById('main-container');
 			const results = document.getElementById('results');
@@ -56,25 +91,86 @@
 				// Check if results contain content
 				if (results && results.innerHTML.trim()) {
 					container.classList.add('has-results');
-				} else {
-					container.classList.remove('has-results');
+
+					// Update history immediately
+					updateHistory();
 				}
 
-				// Re-focus the input
+				// Re-focus the input immediately
 				if (wordInput) {
-					setTimeout(() => wordInput.focus(), 100);
+					wordInput.focus();
 				}
 			}
 		});
 
-		// Clear results and return to center when input is cleared
-		document.addEventListener('input', function (event) {
-			if (event.target.name === 'word' && event.target.value === '') {
-				const container = document.getElementById('main-container');
-				const results = document.getElementById('results');
-				container.classList.remove('has-results');
-				if (results) {
-					results.innerHTML = '';
+		// Function to search a word from history
+		function searchWord(word) {
+			const wordInput = document.querySelector('input[name="word"]');
+			if (wordInput) {
+				wordInput.value = word;
+				// Trigger the form submission immediately
+				const form = wordInput.closest('form');
+				if (form) {
+					htmx.trigger(form, 'submit');
+				}
+			}
+		}
+
+		// Function to update history display
+		function updateHistory() {
+			fetch('/history')
+				.then(response => response.text())
+				.then(html => {
+					const vocabularySection = document.querySelector('.vocabulary-section');
+					if (vocabularySection) {
+						const parser = new DOMParser();
+						const doc = parser.parseFromString(html, 'text/html');
+						const newVocabularySection = doc.querySelector('.vocabulary-section');
+						if (newVocabularySection) {
+							vocabularySection.innerHTML = newVocabularySection.innerHTML;
+
+							// Re-attach event listener to toggle button
+							const toggleBtn = document.getElementById('vocabulary-toggle');
+							const vocabularyList = document.getElementById('vocabulary-list');
+
+							if (toggleBtn && vocabularyList) {
+								toggleBtn.addEventListener('click', function () {
+									vocabularyList.classList.toggle('hidden');
+									toggleBtn.classList.toggle('active');
+								});
+							}
+						}
+					} else {
+						// If no vocabulary section exists, add it
+						const searchSection = document.querySelector('.search-section');
+						const parser = new DOMParser();
+						const doc = parser.parseFromString(html, 'text/html');
+						const newVocabularySection = doc.querySelector('.vocabulary-section');
+						if (newVocabularySection && searchSection) {
+							searchSection.insertAdjacentElement('afterend', newVocabularySection);
+
+							// Attach event listener to toggle button
+							const toggleBtn = document.getElementById('vocabulary-toggle');
+							const vocabularyList = document.getElementById('vocabulary-list');
+
+							if (toggleBtn && vocabularyList) {
+								toggleBtn.addEventListener('click', function () {
+									vocabularyList.classList.toggle('hidden');
+									toggleBtn.classList.toggle('active');
+								});
+							}
+						}
+					}
+				});
+		}
+
+		// Add keyboard shortcut to toggle vocabulary list
+		document.addEventListener('keydown', function (event) {
+			// Alt+V to toggle vocabulary list
+			if (event.altKey && event.key === 'v') {
+				const toggleBtn = document.getElementById('vocabulary-toggle');
+				if (toggleBtn) {
+					toggleBtn.click();
 				}
 			}
 		});
