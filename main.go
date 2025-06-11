@@ -127,6 +127,21 @@ func historyHandler(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "history.html", data)
 }
 
+func clearHistoryHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	sessionID := getSessionID(r)
+
+	// Clear the history for this session
+	delete(sessionHistory, sessionID)
+
+	// Return empty response - this will remove the vocabulary section
+	w.WriteHeader(http.StatusOK)
+}
+
 func getSessionID(r *http.Request) string {
 	// Simple session ID based on IP and User-Agent (in production, use proper session management)
 	return r.RemoteAddr + r.UserAgent()

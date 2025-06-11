@@ -10,6 +10,8 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="default">
 	<meta name="color-scheme" content="light dark">
+
+	<!-- Favicon -->
 </head>
 
 <body>
@@ -36,7 +38,7 @@
 		{{if .History}}
 		<div class="vocabulary-section">
 			<button id="vocabulary-toggle" class="vocabulary-toggle">
-				<span>Your Vocabulary</span>
+				<span>Current Session Vocabulary</span>
 				<svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
 					stroke="currentColor" stroke-width="2">
 					<polyline points="6 9 12 15 18 9"></polyline>
@@ -48,8 +50,7 @@
 					<button class="history-item" onclick="searchWord('{{.}}')">{{.}}</button>
 					{{end}}
 				</div>
-				<button class="clear-history-btn" hx-post="/history" hx-target="#history-container"
-					hx-swap="innerHTML">
+				<button class="clear-history-btn" onclick="clearHistory()">
 					Clear All
 				</button>
 			</div>
@@ -70,6 +71,11 @@
 			}
 
 			// Set up vocabulary toggle
+			setupVocabularyToggle();
+		});
+
+		// Function to set up vocabulary toggle
+		function setupVocabularyToggle() {
 			const toggleBtn = document.getElementById('vocabulary-toggle');
 			const vocabularyList = document.getElementById('vocabulary-list');
 
@@ -78,6 +84,31 @@
 					vocabularyList.classList.toggle('hidden');
 					toggleBtn.classList.toggle('active');
 				});
+			}
+		}
+
+		// Use event delegation for dynamically loaded content
+		document.addEventListener('click', function (event) {
+			// Handle vocabulary toggle
+			if (event.target.id === 'vocabulary-toggle' || event.target.closest('#vocabulary-toggle')) {
+				const toggleBtn = event.target.closest('#vocabulary-toggle') || event.target;
+				const vocabularyList = document.getElementById('vocabulary-list');
+
+				if (vocabularyList) {
+					vocabularyList.classList.toggle('hidden');
+					toggleBtn.classList.toggle('active');
+				}
+			}
+
+			// Handle clear history button
+			if (event.target.classList.contains('clear-history-btn')) {
+				clearHistory();
+			}
+
+			// Handle history item clicks
+			if (event.target.classList.contains('history-item')) {
+				const word = event.target.textContent;
+				searchWord(word);
 			}
 		});
 
@@ -127,18 +158,7 @@
 						const doc = parser.parseFromString(html, 'text/html');
 						const newVocabularySection = doc.querySelector('.vocabulary-section');
 						if (newVocabularySection) {
-							vocabularySection.innerHTML = newVocabularySection.innerHTML;
-
-							// Re-attach event listener to toggle button
-							const toggleBtn = document.getElementById('vocabulary-toggle');
-							const vocabularyList = document.getElementById('vocabulary-list');
-
-							if (toggleBtn && vocabularyList) {
-								toggleBtn.addEventListener('click', function () {
-									vocabularyList.classList.toggle('hidden');
-									toggleBtn.classList.toggle('active');
-								});
-							}
+							vocabularySection.outerHTML = newVocabularySection.outerHTML;
 						}
 					} else {
 						// If no vocabulary section exists, add it
@@ -148,17 +168,6 @@
 						const newVocabularySection = doc.querySelector('.vocabulary-section');
 						if (newVocabularySection && searchSection) {
 							searchSection.insertAdjacentElement('afterend', newVocabularySection);
-
-							// Attach event listener to toggle button
-							const toggleBtn = document.getElementById('vocabulary-toggle');
-							const vocabularyList = document.getElementById('vocabulary-list');
-
-							if (toggleBtn && vocabularyList) {
-								toggleBtn.addEventListener('click', function () {
-									vocabularyList.classList.toggle('hidden');
-									toggleBtn.classList.toggle('active');
-								});
-							}
 						}
 					}
 				});
@@ -174,6 +183,25 @@
 				}
 			}
 		});
+
+		// Function to clear history
+		function clearHistory() {
+			fetch('/clear-history', {
+				method: 'POST'
+			})
+				.then(response => {
+					if (response.ok) {
+						// Remove the vocabulary section from the DOM
+						const vocabularySection = document.querySelector('.vocabulary-section');
+						if (vocabularySection) {
+							vocabularySection.remove();
+						}
+					}
+				})
+				.catch(error => {
+					console.error('Error clearing history:', error);
+				});
+		}
 	</script>
 </body>
 
