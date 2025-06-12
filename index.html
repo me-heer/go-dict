@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<title>Dictionary</title>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<meta name="color-scheme" content="light dark">
+
+	<!-- Favicon -->
+	<link rel="icon"
+		href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+
+	<style>
+		:root {
+			/* Light theme colors */
+			--ios-background: #f2f2f7;
+			--ios-card: #ffffff;
+			--ios-text: #000000;
+			--ios-text-secondary: #8e8e93;
+			--ios-blue: #007aff;
+			--ios-red: #ff3b30;
+			--ios-border: rgba(60, 60, 67, 0.1);
+			--ios-shadow: rgba(0, 0, 0, 0.05);
+			--ios-input-bg: rgba(142, 142, 147, 0.12);
+			--ios-input-bg-focus: rgba(142, 142, 147, 0.18);
+		}
+
+		@media (prefers-color-scheme: dark) {
+			:root {
+				/* Dark theme colors */
+				--ios-background: #000000;
+				--ios-card: #1c1c1e;
+				--ios-text: #ffffff;
+				--ios-text-secondary: #8e8e93;
+				--ios-blue: #0a84ff;
+				--ios-red: #ff453a;
+				--ios-border: rgba(84, 84, 88, 0.6);
+				--ios-shadow: rgba(0, 0, 0, 0.3);
+				--ios-input-bg: rgba(118, 118, 128, 0.24);
+				--ios-input-bg-focus: rgba(118, 118, 128, 0.32);
+			}
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
+			line-height: 1.5;
+			color: var(--ios-text);
+			background-color: var(--ios-background);
+			padding-top: env(safe-area-inset-top);
+			padding-bottom: env(safe-area-inset-bottom);
+		}
+
+		.container {
+			max-width: 650px;
+			margin: 0 auto;
+			padding: 1.5rem 1rem;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.search-section {
+			width: 100%;
+			max-width: 400px;
+			text-align: center;
+			margin-bottom: 1rem;
+		}
+
+		.search-form {
+			display: flex;
+			width: 100%;
+		}
+
+		.search-container {
+			position: relative;
+			width: 100%;
+		}
+
+		.search-icon {
+			position: absolute;
+			left: 0.75rem;
+			top: 50%;
+			transform: translateY(-50%);
+			color: var(--ios-text-secondary);
+			width: 1rem;
+			height: 1rem;
+		}
+
+		.search-container input {
+			width: 100%;
+			padding: 1rem 0.75rem 1rem 2.5rem;
+			border: none;
+			border-radius: 12px;
+			font-size: 1.1rem;
+			background-color: var(--ios-input-bg);
+			color: var(--ios-text);
+			-webkit-appearance: none;
+			appearance: none;
+		}
+
+		.search-container input:focus {
+			outline: none;
+			background-color: var(--ios-input-bg-focus);
+		}
+
+		.search-container input::placeholder {
+			color: var(--ios-text-secondary);
+		}
+
+		button {
+			padding: 0.75rem 1rem;
+			background-color: var(--ios-blue);
+			color: white;
+			border: none;
+			border-radius: 12px;
+			font-size: 1rem;
+			font-weight: 600;
+			cursor: pointer;
+			-webkit-appearance: none;
+			appearance: none;
+		}
+
+		button:hover {
+			background-color: #0056d6;
+		}
+
+		button:active {
+			background-color: #004bb8;
+		}
+
+		button:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		.loading {
+			text-align: center;
+			padding: 1rem;
+			color: var(--ios-text-secondary);
+			font-weight: 500;
+			font-size: 1rem;
+			display: none;
+		}
+
+		.loading.show {
+			display: block;
+		}
+
+		.error-card {
+			background-color: rgba(255, 59, 48, 0.1);
+			border: 1px solid rgba(255, 59, 48, 0.2);
+			border-radius: 12px;
+			color: var(--ios-red);
+			padding: 1rem 1.25rem;
+			margin-top: 1rem;
+			box-shadow: 0 2px 10px var(--ios-shadow);
+			width: 100%;
+			max-width: 500px;
+		}
+
+		.results-container {
+			margin-top: 1.5rem;
+			width: 100%;
+			max-width: 600px;
+			align-self: flex-start;
+		}
+
+		.word-card {
+			background-color: var(--ios-card);
+			border-radius: 16px;
+			padding: 1.5rem;
+			margin-bottom: 1.5rem;
+			box-shadow: 0 4px 20px var(--ios-shadow);
+			border: 1px solid var(--ios-border);
+		}
+
+		.word-header {
+			display: flex;
+			align-items: baseline;
+			gap: 0.75rem;
+			margin-bottom: 1rem;
+			flex-wrap: wrap;
+		}
+
+		.word-title {
+			font-size: 2rem;
+			font-weight: 700;
+			letter-spacing: -0.5px;
+			color: var(--ios-text);
+		}
+
+		.phonetic {
+			font-size: 1rem;
+			color: var(--ios-text-secondary);
+			font-weight: 400;
+		}
+
+		.audio-container {
+			margin: 1rem 0;
+			display: flex;
+			align-items: center;
+		}
+
+		.audio-container audio {
+			display: none;
+		}
+
+		.replay-button {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.5rem 1rem;
+			background-color: var(--ios-input-bg);
+			color: var(--ios-blue);
+			border-radius: 20px;
+			font-size: 0.9rem;
+			font-weight: 500;
+			box-shadow: none;
+		}
+
+		.replay-button:hover {
+			background-color: var(--ios-input-bg-focus);
+		}
+
+		.replay-button.highlight {
+			background-color: rgba(0, 122, 255, 0.1);
+			box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+		}
+
+		.meaning-section {
+			margin-top: 1.5rem;
+			padding-top: 1.5rem;
+			border-top: 1px solid var(--ios-border);
+		}
+
+		.part-of-speech {
+			font-size: 1.1rem;
+			font-weight: 600;
+			font-style: italic;
+			margin-bottom: 0.75rem;
+			color: var(--ios-blue);
+		}
+
+		.definitions-list {
+			padding-left: 1.5rem;
+			list-style-type: decimal;
+		}
+
+		.definition-item {
+			padding-left: 0.5rem;
+			margin-bottom: 1rem;
+		}
+
+		.definition {
+			margin-bottom: 0.25rem;
+			line-height: 1.5;
+			color: var(--ios-text);
+		}
+
+		.example {
+			color: var(--ios-text-secondary);
+			font-style: italic;
+			margin-top: 0.5rem;
+			padding-left: 0.5rem;
+			border-left: 2px solid var(--ios-border);
+		}
+
+		.synonyms {
+			margin-top: 0.5rem;
+			font-size: 0.9rem;
+		}
+
+		.synonyms .label {
+			font-weight: 500;
+			color: var(--ios-text);
+		}
+
+		.synonyms span:not(.label) {
+			color: var(--ios-blue);
+		}
+
+		/* Vocabulary Section Styles */
+		.vocabulary-section {
+			width: 100%;
+			max-width: 400px;
+			margin-top: 0.5rem;
+			margin-bottom: 1rem;
+		}
+
+		.vocabulary-toggle {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.5rem;
+			background-color: transparent;
+			color: var(--ios-blue);
+			border: none;
+			border-radius: 8px;
+			font-size: 0.9rem;
+			font-weight: 600;
+			cursor: pointer;
+			box-shadow: none;
+		}
+
+		.vocabulary-toggle:hover {
+			background-color: rgba(0, 122, 255, 0.05);
+		}
+
+		.vocabulary-toggle.active {
+			background-color: rgba(0, 122, 255, 0.1);
+		}
+
+		.toggle-icon {
+			transition: transform 0.2s ease;
+		}
+
+		.vocabulary-toggle.active .toggle-icon {
+			transform: rotate(180deg);
+		}
+
+		.vocabulary-list {
+			margin-top: 0.5rem;
+			padding: 0.75rem;
+			background-color: var(--ios-card);
+			border-radius: 12px;
+			border: 1px solid var(--ios-border);
+			box-shadow: 0 4px 12px var(--ios-shadow);
+		}
+
+		.vocabulary-list.hidden {
+			display: none;
+		}
+
+		.history-list {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			justify-content: center;
+			margin-bottom: 1rem;
+		}
+
+		.history-item {
+			padding: 0.5rem 1rem;
+			background-color: var(--ios-input-bg);
+			color: var(--ios-text);
+			border: none;
+			border-radius: 20px;
+			font-size: 0.9rem;
+			cursor: pointer;
+			-webkit-appearance: none;
+			appearance: none;
+			font-weight: 500;
+			box-shadow: none;
+		}
+
+		.history-item:hover {
+			background-color: var(--ios-input-bg-focus);
+		}
+
+		.history-item:active {
+			background-color: var(--ios-blue);
+			color: white;
+		}
+
+		.clear-history-btn {
+			padding: 0.4rem 0.8rem;
+			background-color: transparent;
+			color: var(--ios-text-secondary);
+			border: 1px solid var(--ios-border);
+			border-radius: 8px;
+			font-size: 0.8rem;
+			cursor: pointer;
+			display: block;
+			margin: 0 auto;
+			font-weight: 500;
+			box-shadow: none;
+		}
+
+		.clear-history-btn:hover {
+			background-color: var(--ios-input-bg);
+			color: var(--ios-text);
+		}
+
+		/* Results state - move search to top */
+		.container.has-results {
+			justify-content: flex-start;
+			padding-top: 2rem;
+		}
+
+		.container.has-results .search-section {
+			max-width: 600px;
+			margin-bottom: 0.5rem;
+		}
+
+		.container.has-results .vocabulary-section {
+			max-width: 600px;
+			margin-top: 0.5rem;
+		}
+
+		@media (min-width: 640px) {
+			.search-form {
+				flex-direction: row;
+			}
+		}
+
+		@media (max-width: 640px) {
+			.container {
+				padding: 1rem;
+			}
+
+			.word-title {
+				font-size: 1.75rem;
+			}
+
+			.search-container input {
+				font-size: 1rem;
+				padding: 0.875rem 0.75rem 0.875rem 2.25rem;
+			}
+
+			.history-item {
+				font-size: 0.85rem;
+				padding: 0.4rem 0.8rem;
+			}
+
+			.clear-history-btn {
+				font-size: 0.75rem;
+				padding: 0.3rem 0.6rem;
+			}
+		}
+
+		/* Dark mode specific adjustments */
+		@media (prefers-color-scheme: dark) {
+			.error-card {
+				background-color: rgba(255, 69, 58, 0.15);
+				border-color: rgba(255, 69, 58, 0.3);
+			}
+
+			.word-card {
+				box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+			}
+
+			.vocabulary-toggle:hover {
+				background-color: rgba(10, 132, 255, 0.1);
+			}
+
+			.vocabulary-toggle.active {
+				background-color: rgba(10, 132, 255, 0.15);
+			}
+
+			.vocabulary-list {
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<main class="container" id="main-container">
+		<div class="search-section">
+			<form class="search-form" id="search-form">
+				<div class="search-container">
+					<svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2">
+						<circle cx="11" cy="11" r="8"></circle>
+						<path d="m21 21-4.35-4.35"></path>
+					</svg>
+					<input type="text" name="word" id="word-input"
+						placeholder="Search for a word..." autofocus required>
+				</div>
+			</form>
+
+			<div id="loading" class="loading">
+				Searching...
+			</div>
+		</div>
+
+		<div id="vocabulary-section" class="vocabulary-section" style="display: none;">
+			<button id="vocabulary-toggle" class="vocabulary-toggle">
+				<span>Your Vocabulary</span>
+				<svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2">
+					<polyline points="6 9 12 15 18 9"></polyline>
+				</svg>
+			</button>
+			<div id="vocabulary-list" class="vocabulary-list hidden">
+				<div id="history-list" class="history-list">
+					<!-- History items will be populated here -->
+				</div>
+				<button id="clear-history-btn" class="clear-history-btn">
+					Clear All
+				</button>
+			</div>
+		</div>
+
+		<div id="results">
+			<!-- Results will be loaded here -->
+		</div>
+	</main>
+
+	<script>
+		// Dictionary App Class
+		class DictionaryApp {
+			constructor() {
+				this.init();
+			}
+
+			init() {
+				this.setupEventListeners();
+				this.loadHistory();
+				this.focusInput();
+			}
+
+			setupEventListeners() {
+				// Search form submission
+				document.getElementById('search-form').addEventListener('submit', (e) => {
+					e.preventDefault();
+					this.handleSearch();
+				});
+
+				// Vocabulary toggle
+				document.getElementById('vocabulary-toggle').addEventListener('click', () => {
+					this.toggleVocabulary();
+				});
+
+				// Clear history button
+				document.getElementById('clear-history-btn').addEventListener('click', () => {
+					this.clearHistory();
+				});
+
+				// Keyboard shortcuts
+				document.addEventListener('keydown', (event) => {
+					if (event.altKey && event.key === 'v') {
+						this.toggleVocabulary();
+					}
+				});
+
+				// Event delegation for history items
+				document.addEventListener('click', (event) => {
+					if (event.target.classList.contains('history-item')) {
+						const word = event.target.textContent;
+						this.searchWord(word);
+					}
+				});
+			}
+
+			focusInput() {
+				const wordInput = document.getElementById('word-input');
+				if (wordInput) {
+					wordInput.focus();
+				}
+			}
+
+			async handleSearch() {
+				const wordInput = document.getElementById('word-input');
+				const query = wordInput.value.trim();
+
+				if (!query) {
+					this.showError('Please enter a word');
+					return;
+				}
+
+				this.showLoading(true);
+				this.addToHistory(query);
+
+				try {
+					const results = await this.fetchDefinition(query);
+					this.displayResults(results, query);
+					this.updateLayout();
+				} catch (error) {
+					this.showError(error.message);
+				} finally {
+					this.showLoading(false);
+					this.focusInput();
+				}
+			}
+
+			async fetchDefinition(word) {
+				const apiURL = `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`;
+
+				try {
+					const response = await fetch(apiURL);
+
+					if (response.status === 404) {
+						throw new Error('Word not found. Please check your spelling and try again.');
+					}
+
+					if (!response.ok) {
+						throw new Error('Failed to fetch dictionary data');
+					}
+
+					const data = await response.json();
+					return data;
+				} catch (error) {
+					if (error.message.includes('fetch')) {
+						throw new Error('Network error. Please check your internet connection.');
+					}
+					throw error;
+				}
+			}
+
+			displayResults(results, query) {
+				const resultsContainer = document.getElementById('results');
+
+				if (!results || results.length === 0) {
+					this.showError('No results found');
+					return;
+				}
+
+				const entry = results[0];
+				let html = '<div class="results-container">';
+				html += '<div class="word-card">';
+				html += '<div class="word-header">';
+				html += `<h2 class="word-title">${entry.word}</h2>`;
+
+				if (entry.phonetic) {
+					html += `<span class="phonetic">${entry.phonetic}</span>`;
+				}
+
+				html += '</div>';
+
+				// Audio pronunciation
+				const audioUrl = this.findAudioUrl(entry.phonetics);
+				if (audioUrl) {
+					html += '<div class="audio-container">';
+					html += `<audio id="pronunciation-audio" src="${audioUrl}" preload="auto"></audio>`;
+					html += '<button id="replay-pronunciation" class="replay-button">';
+					html += '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">';
+					html += '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+					html += '</svg>';
+					html += 'Play pronunciation';
+					html += '</button>';
+					html += '</div>';
+				}
+
+				// Meanings
+				if (entry.meanings) {
+					entry.meanings.forEach(meaning => {
+						html += '<div class="meaning-section">';
+						html += `<h3 class="part-of-speech">${meaning.partOfSpeech}</h3>`;
+
+						if (meaning.definitions) {
+							html += '<ol class="definitions-list">';
+							meaning.definitions.forEach(def => {
+								html += '<li class="definition-item">';
+								html += `<p class="definition">${def.definition}</p>`;
+
+								if (def.example) {
+									html += `<p class="example">"${def.example}"</p>`;
+								}
+
+								if (def.synonyms && def.synonyms.length > 0) {
+									html += '<div class="synonyms">';
+									html += '<span class="label">Synonyms: </span>';
+									html += `<span>${def.synonyms.join(', ')}</span>`;
+									html += '</div>';
+								}
+
+								html += '</li>';
+							});
+							html += '</ol>';
+						}
+
+						html += '</div>';
+					});
+				}
+
+				html += '</div>';
+				html += '</div>';
+
+				resultsContainer.innerHTML = html;
+
+				// Auto-play pronunciation
+				if (audioUrl) {
+					setTimeout(() => {
+						const audio = document.getElementById('pronunciation-audio');
+						if (audio) {
+							audio.play().catch(error => {
+								console.log('Autoplay prevented by browser policy.');
+								const replayButton = document.getElementById('replay-pronunciation');
+								if (replayButton) {
+									replayButton.classList.add('highlight');
+								}
+							});
+						}
+					}, 100);
+
+					// Setup replay button
+					const replayButton = document.getElementById('replay-pronunciation');
+					if (replayButton) {
+						replayButton.addEventListener('click', () => {
+							const audio = document.getElementById('pronunciation-audio');
+							if (audio) {
+								audio.play();
+							}
+						});
+					}
+				}
+			}
+
+			findAudioUrl(phonetics) {
+				if (!phonetics) return null;
+
+				for (const phonetic of phonetics) {
+					if (phonetic.audio) {
+						return phonetic.audio;
+					}
+				}
+				return null;
+			}
+
+			showError(message) {
+				const resultsContainer = document.getElementById('results');
+				resultsContainer.innerHTML = `<div class="error-card">${message}</div>`;
+			}
+
+			showLoading(show) {
+				const loading = document.getElementById('loading');
+				if (show) {
+					loading.classList.add('show');
+				} else {
+					loading.classList.remove('show');
+				}
+			}
+
+			updateLayout() {
+				const container = document.getElementById('main-container');
+				const results = document.getElementById('results');
+
+				if (results && results.innerHTML.trim()) {
+					container.classList.add('has-results');
+					this.updateHistoryDisplay();
+				}
+			}
+
+			searchWord(word) {
+				const wordInput = document.getElementById('word-input');
+				if (wordInput) {
+					wordInput.value = word;
+					this.handleSearch();
+				}
+			}
+
+			// History Management
+			getHistory() {
+				try {
+					const history = localStorage.getItem('dictionary-history');
+					return history ? JSON.parse(history) : [];
+				} catch (error) {
+					console.error('Error loading history:', error);
+					return [];
+				}
+			}
+
+			saveHistory(history) {
+				try {
+					localStorage.setItem('dictionary-history', JSON.stringify(history));
+				} catch (error) {
+					console.error('Error saving history:', error);
+				}
+			}
+
+			addToHistory(word) {
+				let history = this.getHistory();
+
+				// Remove if already exists (to avoid duplicates)
+				history = history.filter(w => w.toLowerCase() !== word.toLowerCase());
+
+				// Add to beginning
+				history.unshift(word);
+
+				// Keep only last 10 searches
+				if (history.length > 10) {
+					history = history.slice(0, 10);
+				}
+
+				this.saveHistory(history);
+				this.updateHistoryDisplay();
+			}
+
+			loadHistory() {
+				this.updateHistoryDisplay();
+			}
+
+			updateHistoryDisplay() {
+				const history = this.getHistory();
+				const vocabularySection = document.getElementById('vocabulary-section');
+				const historyList = document.getElementById('history-list');
+
+				if (history.length > 0) {
+					vocabularySection.style.display = 'block';
+
+					let html = '';
+					history.forEach(word => {
+						html += `<button class="history-item">${word}</button>`;
+					});
+
+					historyList.innerHTML = html;
+				} else {
+					vocabularySection.style.display = 'none';
+				}
+			}
+
+			clearHistory() {
+				this.saveHistory([]);
+				this.updateHistoryDisplay();
+			}
+
+			toggleVocabulary() {
+				const toggleBtn = document.getElementById('vocabulary-toggle');
+				const vocabularyList = document.getElementById('vocabulary-list');
+
+				if (vocabularyList && toggleBtn) {
+					vocabularyList.classList.toggle('hidden');
+					toggleBtn.classList.toggle('active');
+				}
+			}
+		}
+
+		// Initialize the app when DOM is loaded
+		document.addEventListener('DOMContentLoaded', () => {
+			new DictionaryApp();
+		});
+	</script>
+</body>
+
+</html>
