@@ -171,6 +171,129 @@
 			max-width: 500px;
 		}
 
+		.error-actions {
+			margin-top: 1rem;
+			display: flex;
+			justify-content: center;
+		}
+
+		.search-google-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.5rem 1rem;
+			background-color: var(--ios-blue);
+			color: white;
+			text-decoration: none;
+			border-radius: 8px;
+			font-size: 0.9rem;
+			font-weight: 500;
+			transition: background-color 0.2s ease;
+		}
+
+		.search-google-btn:hover {
+			background-color: #0056d6;
+		}
+
+		.search-google-btn svg {
+			width: 14px;
+			height: 14px;
+		}
+
+		.welcome-container {
+			margin-top: 1.5rem;
+			width: 100%;
+			max-width: 600px;
+			align-self: flex-start;
+		}
+
+		.welcome-card {
+			background-color: var(--ios-card);
+			border-radius: 16px;
+			padding: 1.5rem;
+			margin-bottom: 1.5rem;
+			box-shadow: 0 4px 20px var(--ios-shadow);
+			border: 1px solid var(--ios-border);
+		}
+
+		.welcome-header {
+			display: flex;
+			align-items: baseline;
+			gap: 0.75rem;
+			margin-bottom: 1rem;
+			flex-wrap: wrap;
+		}
+
+		.welcome-title {
+			font-size: 2rem;
+			font-weight: 700;
+			letter-spacing: -0.5px;
+			color: var(--ios-text);
+		}
+
+		.welcome-badge {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.25rem;
+			padding: 0.25rem 0.5rem;
+			background-color: var(--ios-blue);
+			color: white;
+			border-radius: 6px;
+			font-size: 0.8rem;
+			font-weight: 500;
+		}
+
+		.welcome-section {
+			margin-top: 1.5rem;
+			padding-top: 1.5rem;
+			border-top: 1px solid var(--ios-border);
+		}
+
+		.welcome-description {
+			font-size: 1.1rem;
+			line-height: 1.6;
+			color: var(--ios-text);
+			margin-bottom: 1rem;
+		}
+
+		.welcome-features {
+			margin-top: 1rem;
+		}
+
+		.feature-item {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			margin-bottom: 0.75rem;
+			font-size: 1rem;
+			color: var(--ios-text);
+		}
+
+		.feature-item svg {
+			width: 16px;
+			height: 16px;
+			color: var(--ios-blue);
+			flex-shrink: 0;
+		}
+
+		.repo-link {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			color: var(--ios-blue);
+			text-decoration: none;
+			font-weight: 500;
+		}
+
+		.repo-link:hover {
+			text-decoration: underline;
+		}
+
+		.repo-link svg {
+			width: 16px;
+			height: 16px;
+		}
+
 		.results-container {
 			margin-top: 1.5rem;
 			width: 100%;
@@ -200,6 +323,30 @@
 			font-weight: 700;
 			letter-spacing: -0.5px;
 			color: var(--ios-text);
+		}
+
+		.google-search-link {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.25rem;
+			padding: 0.25rem 0.5rem;
+			background-color: var(--ios-input-bg);
+			color: var(--ios-text-secondary);
+			text-decoration: none;
+			border-radius: 6px;
+			font-size: 0.8rem;
+			font-weight: 500;
+			transition: background-color 0.2s ease, color 0.2s ease;
+		}
+
+		.google-search-link:hover {
+			background-color: var(--ios-input-bg-focus);
+			color: var(--ios-text);
+		}
+
+		.google-search-link svg {
+			width: 12px;
+			height: 12px;
 		}
 
 		.phonetic {
@@ -466,6 +613,448 @@
 				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 			}
 		}
+
+		/* Statistics Section Styles */
+		.stats-section {
+			width: 100%;
+			max-width: 400px;
+			margin-top: 0.5rem;
+			margin-bottom: 1rem;
+		}
+
+		.stats-toggle {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.5rem;
+			background-color: transparent;
+			color: var(--ios-blue);
+			border: none;
+			border-radius: 8px;
+			font-size: 0.9rem;
+			font-weight: 600;
+			cursor: pointer;
+			box-shadow: none;
+		}
+
+		.stats-toggle:hover {
+			background-color: rgba(0, 122, 255, 0.05);
+		}
+
+		.stats-toggle.active {
+			background-color: rgba(0, 122, 255, 0.1);
+		}
+
+		.stats-content {
+			margin-top: 0.5rem;
+			padding: 0.75rem;
+			background-color: var(--ios-card);
+			border-radius: 12px;
+			border: 1px solid var(--ios-border);
+			box-shadow: 0 4px 12px var(--ios-shadow);
+		}
+
+		.stats-content.hidden {
+			display: none;
+		}
+
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1rem;
+			margin-bottom: 1rem;
+		}
+
+		.stat-card {
+			background-color: var(--ios-input-bg);
+			padding: 0.75rem;
+			border-radius: 8px;
+			text-align: center;
+		}
+
+		.stat-value {
+			font-size: 1.5rem;
+			font-weight: 700;
+			color: var(--ios-blue);
+			margin-bottom: 0.25rem;
+		}
+
+		.stat-label {
+			font-size: 0.8rem;
+			color: var(--ios-text-secondary);
+		}
+
+		.monthly-stats {
+			margin-top: 1rem;
+		}
+
+		.monthly-stats h4 {
+			font-size: 0.9rem;
+			margin-bottom: 0.5rem;
+			color: var(--ios-text);
+		}
+
+		.monthly-bar {
+			height: 8px;
+			background-color: var(--ios-input-bg);
+			border-radius: 4px;
+			margin-bottom: 0.5rem;
+			overflow: hidden;
+		}
+
+		.monthly-bar-fill {
+			height: 100%;
+			background-color: var(--ios-blue);
+			border-radius: 4px;
+			transition: width 0.3s ease;
+		}
+
+		.monthly-label {
+			display: flex;
+			justify-content: space-between;
+			font-size: 0.8rem;
+			color: var(--ios-text-secondary);
+		}
+
+		.flashcard-btn {
+			width: 100%;
+			margin-top: 1rem;
+			padding: 0.75rem;
+			background-color: var(--ios-blue);
+			color: white;
+			border: none;
+			border-radius: 8px;
+			font-size: 0.9rem;
+			font-weight: 600;
+			cursor: pointer;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 0.5rem;
+		}
+
+		.flashcard-btn:hover {
+			background-color: #0056d6;
+		}
+
+		.flashcard-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0, 0, 0, 0.5);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 1000;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.2s ease, visibility 0.2s ease;
+		}
+
+		.flashcard-modal.show {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.flashcard-content {
+			background-color: var(--ios-card);
+			padding: 2rem;
+			border-radius: 16px;
+			width: 90%;
+			max-width: 500px;
+			text-align: center;
+			box-shadow: 0 4px 20px var(--ios-shadow);
+			position: relative;
+		}
+
+		.flashcard-word {
+			font-size: 2rem;
+			font-weight: 700;
+			margin-bottom: 1rem;
+			color: var(--ios-text);
+		}
+
+		.flashcard-phonetic {
+			font-size: 1rem;
+			color: var(--ios-text-secondary);
+			margin-bottom: 1.5rem;
+		}
+
+		.flashcard-definition {
+			font-size: 1.1rem;
+			line-height: 1.5;
+			color: var(--ios-text);
+			margin-bottom: 1.5rem;
+		}
+
+		.flashcard-error {
+			color: var(--ios-red);
+			font-style: italic;
+			margin-bottom: 1rem;
+		}
+
+		.flashcard-google-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.5rem 1rem;
+			background-color: var(--ios-blue);
+			color: white;
+			text-decoration: none;
+			border-radius: 8px;
+			font-size: 0.9rem;
+			font-weight: 500;
+			margin-bottom: 1rem;
+		}
+
+		.flashcard-google-btn:hover {
+			background-color: #0056d6;
+		}
+
+		.flashcard-nav {
+			display: flex;
+			justify-content: center;
+			gap: 1rem;
+		}
+
+		.flashcard-nav button {
+			padding: 0.5rem 1rem;
+			background-color: var(--ios-input-bg);
+			color: var(--ios-text);
+			border: none;
+			border-radius: 8px;
+			font-size: 0.9rem;
+			cursor: pointer;
+		}
+
+		.flashcard-nav button:hover {
+			background-color: var(--ios-input-bg-focus);
+		}
+
+		.flashcard-close {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			background: none;
+			border: none;
+			color: var(--ios-text);
+			font-size: 1.5rem;
+			cursor: pointer;
+			padding: 0.5rem;
+		}
+
+		.stats-actions {
+			display: flex;
+			gap: 1rem;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+
+		.stats-action-btn {
+			padding: 0.75rem 1.5rem;
+			border: none;
+			border-radius: 12px;
+			font-size: 1rem;
+			font-weight: 600;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			text-decoration: none;
+		}
+
+		.flashcard-btn {
+			background-color: var(--ios-blue);
+			color: white;
+		}
+
+		.flashcard-btn:hover {
+			background-color: #0056d6;
+		}
+
+		.export-csv-btn {
+			background-color: #34c759;
+			color: white;
+		}
+
+		.export-csv-btn:hover {
+			background-color: #28a745;
+		}
+
+		.view-words-btn {
+			background-color: var(--ios-input-bg);
+			color: var(--ios-text);
+		}
+
+		.view-words-btn:hover {
+			background-color: var(--ios-input-bg-focus);
+		}
+
+		.reset-stats-btn {
+			background-color: var(--ios-red);
+			color: white;
+		}
+
+		.reset-stats-btn:hover {
+			background-color: #cc2e24;
+		}
+
+		@media (max-width: 640px) {
+			.sidebar {
+				bottom: 10px;
+				right: 10px;
+			}
+
+			.stats-content {
+				width: 95%;
+				max-width: none;
+				padding: 1.5rem;
+			}
+
+			.stats-grid {
+				grid-template-columns: 1fr;
+				gap: 0.75rem;
+				margin-bottom: 1.5rem;
+			}
+
+			.stats-actions {
+				flex-direction: column;
+				gap: 0.75rem;
+			}
+
+			.stats-action-btn {
+				justify-content: center;
+			}
+		}
+
+		/* Sidebar Styles */
+		.sidebar {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			z-index: 100;
+		}
+
+		.sidebar-tab {
+			background-color: rgba(142, 142, 147, 0.2);
+			color: var(--ios-text-secondary);
+			padding: 0.5rem;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+			width: 40px;
+			height: 40px;
+			border: 1px solid var(--ios-border);
+			transition: background-color 0.2s ease, color 0.2s ease;
+		}
+
+		.sidebar-tab:hover {
+			background-color: rgba(142, 142, 147, 0.3);
+			color: var(--ios-text);
+		}
+
+		.sidebar-tab svg {
+			width: 16px;
+			height: 16px;
+		}
+
+		/* Stats Modal */
+		.stats-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0, 0, 0, 0.5);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 1000;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.3s ease, visibility 0.3s ease;
+		}
+
+		.stats-modal.show {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.stats-content {
+			background-color: var(--ios-card);
+			border-radius: 16px;
+			border: 1px solid var(--ios-border);
+			box-shadow: 0 4px 20px var(--ios-shadow);
+			padding: 2rem;
+			width: 90%;
+			max-width: 500px;
+			max-height: 80vh;
+			overflow-y: auto;
+			position: relative;
+		}
+
+		.stats-close {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			background: none;
+			border: none;
+			color: var(--ios-text);
+			font-size: 1.5rem;
+			cursor: pointer;
+			padding: 0.5rem;
+		}
+
+		.stats-title {
+			font-size: 1.5rem;
+			font-weight: 700;
+			color: var(--ios-text);
+			margin-bottom: 1.5rem;
+			text-align: center;
+		}
+
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1rem;
+			margin-bottom: 2rem;
+		}
+
+		.stat-card {
+			background-color: var(--ios-input-bg);
+			padding: 1rem;
+			border-radius: 12px;
+			text-align: center;
+		}
+
+		.stat-value {
+			font-size: 1.5rem;
+			font-weight: 700;
+			color: var(--ios-blue);
+			margin-bottom: 0.5rem;
+		}
+
+		.stat-label {
+			font-size: 0.9rem;
+			color: var(--ios-text-secondary);
+		}
+
+		@media (prefers-color-scheme: dark) {
+			.sidebar-tab {
+				background-color: rgba(118, 118, 128, 0.24);
+			}
+
+			.sidebar-tab:hover {
+				background-color: rgba(118, 118, 128, 0.32);
+			}
+		}
 	</style>
 </head>
 
@@ -489,21 +1078,91 @@
 			</div>
 		</div>
 
-		<div id="vocabulary-section" class="vocabulary-section" style="display: none;">
-			<button id="vocabulary-toggle" class="vocabulary-toggle">
-				<span>Your Vocabulary</span>
-				<svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-					stroke="currentColor" stroke-width="2">
-					<polyline points="6 9 12 15 18 9"></polyline>
+		<div id="sidebar" class="sidebar">
+			<div id="sidebar-tab" class="sidebar-tab">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M12 20V10"></path>
+					<path d="M18 20V4"></path>
+					<path d="M6 20v-4"></path>
 				</svg>
-			</button>
-			<div id="vocabulary-list" class="vocabulary-list hidden">
-				<div id="history-list" class="history-list">
-					<!-- History items will be populated here -->
+			</div>
+		</div>
+
+		<div id="stats-modal" class="stats-modal">
+			<div class="stats-content">
+				<button class="stats-close" id="stats-close">&times;</button>
+				<h2 class="stats-title">Statistics</h2>
+				<div class="stats-grid">
+					<div class="stat-card">
+						<div class="stat-value" id="total-words">0</div>
+						<div class="stat-label">Total Words</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-value" id="current-streak">0</div>
+						<div class="stat-label">Current Streak</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-value" id="longest-streak">0</div>
+						<div class="stat-label">Longest Streak</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-value" id="today-words">0</div>
+						<div class="stat-label">Today's Words</div>
+					</div>
 				</div>
-				<button id="clear-history-btn" class="clear-history-btn">
-					Clear All
-				</button>
+				<div class="stats-actions">
+					<button id="flashcard-btn" class="stats-action-btn flashcard-btn">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+							<line x1="3" y1="9" x2="21" y2="9"></line>
+							<line x1="9" y1="21" x2="9" y2="9"></line>
+						</svg>
+						Start Flashcards
+					</button>
+					<button id="export-csv-btn" class="stats-action-btn export-csv-btn">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+							<polyline points="7,10 12,15 17,10"></polyline>
+							<line x1="12" y1="15" x2="12" y2="3"></line>
+						</svg>
+						Export CSV
+					</button>
+					<button id="view-words-btn" class="stats-action-btn view-words-btn">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+							<polyline points="15,3 21,3 21,9"></polyline>
+							<line x1="10" y1="14" x2="21" y2="3"></line>
+						</svg>
+						View Words
+					</button>
+					<button id="reset-stats-btn" class="stats-action-btn reset-stats-btn">
+						Reset Stats
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="flashcard-modal" class="flashcard-modal">
+			<div class="flashcard-content">
+				<button class="flashcard-close">&times;</button>
+				<div class="flashcard-word" id="flashcard-word"></div>
+				<div class="flashcard-phonetic" id="flashcard-phonetic"></div>
+				<div class="flashcard-definition" id="flashcard-definition"></div>
+				<div id="flashcard-google-container" style="text-align: center; display: none;">
+					<div class="flashcard-error">Word not found in dictionary</div>
+					<a id="flashcard-google-link" href="#" target="_blank" class="flashcard-google-btn">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+							<polyline points="15,3 21,3 21,9"></polyline>
+							<line x1="10" y1="14" x2="21" y2="3"></line>
+						</svg>
+						Search on Google
+					</a>
+				</div>
+				<div class="flashcard-nav">
+					<button id="prev-card">Previous</button>
+					<button id="next-card">Next</button>
+				</div>
 			</div>
 		</div>
 
@@ -516,13 +1175,26 @@
 		// Dictionary App Class
 		class DictionaryApp {
 			constructor() {
+				this.stats = {
+					totalWords: 0,
+					currentStreak: 0,
+					longestStreak: 0,
+					todayWords: 0,
+					lastSearchDate: null,
+					monthlyStats: {},
+					dailyStats: {}
+				};
+				this.lastSearchedWord = null;
 				this.init();
 			}
 
 			init() {
 				this.setupEventListeners();
 				this.loadHistory();
+				this.loadStats();
+				this.showWelcomeIfFirstVisit();
 				this.focusInput();
+				this.updateStatsDisplay();
 			}
 
 			setupEventListeners() {
@@ -532,20 +1204,78 @@
 					this.handleSearch();
 				});
 
-				// Vocabulary toggle
-				document.getElementById('vocabulary-toggle').addEventListener('click', () => {
-					this.toggleVocabulary();
+				// Stats modal toggle
+				document.getElementById('sidebar-tab').addEventListener('click', () => {
+					this.toggleStatsModal();
+				});
+
+				// Stats modal close
+				document.getElementById('stats-close').addEventListener('click', () => {
+					this.closeStatsModal();
 				});
 
 				// Clear history button
-				document.getElementById('clear-history-btn').addEventListener('click', () => {
-					this.clearHistory();
+				document.getElementById('reset-stats-btn').addEventListener('click', () => {
+					this.resetAllStats();
+				});
+
+				// Flashcard event listeners
+				document.getElementById('flashcard-btn').addEventListener('click', () => {
+					this.startFlashcards();
+				});
+
+				// Export CSV event listener
+				document.getElementById('export-csv-btn').addEventListener('click', () => {
+					this.exportWordsToCSV();
+				});
+
+				// View words event listener
+				document.getElementById('view-words-btn').addEventListener('click', () => {
+					this.viewWordsInNewTab();
+				});
+
+				document.querySelector('.flashcard-close').addEventListener('click', () => {
+					this.closeFlashcards();
+				});
+
+				document.getElementById('prev-card').addEventListener('click', () => {
+					this.showPreviousCard();
+				});
+
+				document.getElementById('next-card').addEventListener('click', () => {
+					this.showNextCard();
+				});
+
+				// Click outside modals to close
+				document.addEventListener('click', (event) => {
+					const statsModal = document.getElementById('stats-modal');
+					const flashcardModal = document.getElementById('flashcard-modal');
+					
+					if (event.target === statsModal) {
+						this.closeStatsModal();
+					}
+					
+					if (event.target === flashcardModal) {
+						this.closeFlashcards();
+					}
 				});
 
 				// Keyboard shortcuts
 				document.addEventListener('keydown', (event) => {
-					if (event.altKey && event.key === 'v') {
-						this.toggleVocabulary();
+					if (event.altKey && event.key === 'f') {
+						this.startFlashcards();
+					}
+					
+					// Close modals with Escape key
+					if (event.key === 'Escape') {
+						const statsModal = document.getElementById('stats-modal');
+						const flashcardModal = document.getElementById('flashcard-modal');
+						
+						if (statsModal && statsModal.classList.contains('show')) {
+							this.closeStatsModal();
+						} else if (flashcardModal && flashcardModal.classList.contains('show')) {
+							this.closeFlashcards();
+						}
 					}
 				});
 
@@ -575,17 +1305,23 @@
 				}
 
 				this.showLoading(true);
+				this.lastSearchedWord = query;
 				this.addToHistory(query);
+				this.updateStats(query);
 
 				try {
 					const results = await this.fetchDefinition(query);
 					this.displayResults(results, query);
 					this.updateLayout();
 				} catch (error) {
-					this.showError(error.message);
+					// Pass the searched word to showError for Google search option
+					if (error.message.includes('Word not found')) {
+						this.showError(error.message, this.lastSearchedWord);
+					} else {
+						this.showError(error.message);
+					}
 				} finally {
 					this.showLoading(false);
-					// Clear the input field after search
 					wordInput.value = '';
 					this.focusInput();
 				}
@@ -595,19 +1331,23 @@
 				const apiURL = `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`;
 
 				try {
+					console.log('Fetching definition for:', word);
 					const response = await fetch(apiURL);
+					console.log('API Response status:', response.status);
 
 					if (response.status === 404) {
 						throw new Error('Word not found. Please check your spelling and try again.');
 					}
 
 					if (!response.ok) {
-						throw new Error('Failed to fetch dictionary data');
+						throw new Error(`Failed to fetch dictionary data: ${response.status} ${response.statusText}`);
 					}
 
 					const data = await response.json();
+					console.log('API Response data:', data);
 					return data;
 				} catch (error) {
+					console.error('Error fetching definition:', error);
 					if (error.message.includes('fetch')) {
 						throw new Error('Network error. Please check your internet connection.');
 					}
@@ -617,100 +1357,122 @@
 
 			displayResults(results, query) {
 				const resultsContainer = document.getElementById('results');
+				console.log('Displaying results for:', query, results);
 
 				if (!results || results.length === 0) {
 					this.showError('No results found');
 					return;
 				}
 
-				const entry = results[0];
-				let html = '<div class="results-container">';
-				html += '<div class="word-card">';
-				html += '<div class="word-header">';
-				html += `<h2 class="word-title">${entry.word}</h2>`;
-
-				if (entry.phonetic) {
-					html += `<span class="phonetic">${entry.phonetic}</span>`;
-				}
-
-				html += '</div>';
-
-				// Audio pronunciation
-				const audioUrl = this.findAudioUrl(entry.phonetics);
-				if (audioUrl) {
-					html += '<div class="audio-container">';
-					html += `<audio id="pronunciation-audio" src="${audioUrl}" preload="auto"></audio>`;
-					html += '<button id="replay-pronunciation" class="replay-button">';
-					html += '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">';
-					html += '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+				try {
+					const entry = results[0];
+					let html = '<div class="results-container">';
+					html += '<div class="word-card">';
+					html += '<div class="word-header">';
+					html += `<h2 class="word-title">${entry.word}</h2>`;
+					
+					// Add Google search link
+					const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(entry.word + ' meaning')}`;
+					html += `<a href="${googleSearchUrl}" target="_blank" class="google-search-link">`;
+					html += '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">';
+					html += '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>';
+					html += '<polyline points="15,3 21,3 21,9"></polyline>';
+					html += '<line x1="10" y1="14" x2="21" y2="3"></line>';
 					html += '</svg>';
-					html += 'Play pronunciation';
-					html += '</button>';
+					html += 'Google';
+					html += '</a>';
+
+					if (entry.phonetic) {
+						html += `<span class="phonetic">${entry.phonetic}</span>`;
+					}
+
 					html += '</div>';
-				}
 
-				// Meanings
-				if (entry.meanings) {
-					entry.meanings.forEach(meaning => {
-						html += '<div class="meaning-section">';
-						html += `<h3 class="part-of-speech">${meaning.partOfSpeech}</h3>`;
-
-						if (meaning.definitions) {
-							html += '<ol class="definitions-list">';
-							meaning.definitions.forEach(def => {
-								html += '<li class="definition-item">';
-								html += `<p class="definition">${def.definition}</p>`;
-
-								if (def.example) {
-									html += `<p class="example">"${def.example}"</p>`;
-								}
-
-								if (def.synonyms && def.synonyms.length > 0) {
-									html += '<div class="synonyms">';
-									html += '<span class="label">Synonyms: </span>';
-									html += `<span>${def.synonyms.join(', ')}</span>`;
-									html += '</div>';
-								}
-
-								html += '</li>';
-							});
-							html += '</ol>';
-						}
-
+					// Audio pronunciation
+					const audioUrl = this.findAudioUrl(entry.phonetics);
+					if (audioUrl) {
+						html += '<div class="audio-container">';
+						html += `<audio id="pronunciation-audio" src="${audioUrl}" preload="auto"></audio>`;
+						html += '<button id="replay-pronunciation" class="replay-button">';
+						html += '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">';
+						html += '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+						html += '</svg>';
+						html += 'Play pronunciation';
+						html += '</button>';
 						html += '</div>';
-					});
-				}
+					}
 
-				html += '</div>';
-				html += '</div>';
+					// Meanings
+					if (entry.meanings && entry.meanings.length > 0) {
+						entry.meanings.forEach(meaning => {
+							html += '<div class="meaning-section">';
+							html += `<h3 class="part-of-speech">${meaning.partOfSpeech}</h3>`;
 
-				resultsContainer.innerHTML = html;
+							if (meaning.definitions && meaning.definitions.length > 0) {
+								html += '<ol class="definitions-list">';
+								meaning.definitions.forEach(def => {
+									html += '<li class="definition-item">';
+									html += `<p class="definition">${def.definition}</p>`;
 
-				// Auto-play pronunciation
-				if (audioUrl) {
-					setTimeout(() => {
-						const audio = document.getElementById('pronunciation-audio');
-						if (audio) {
-							audio.play().catch(error => {
-								console.log('Autoplay prevented by browser policy.');
-								const replayButton = document.getElementById('replay-pronunciation');
-								if (replayButton) {
-									replayButton.classList.add('highlight');
-								}
-							});
-						}
-					}, 100);
+									if (def.example) {
+										html += `<p class="example">"${def.example}"</p>`;
+									}
 
-					// Setup replay button
-					const replayButton = document.getElementById('replay-pronunciation');
-					if (replayButton) {
-						replayButton.addEventListener('click', () => {
+									if (def.synonyms && def.synonyms.length > 0) {
+										html += '<div class="synonyms">';
+										html += '<span class="label">Synonyms: </span>';
+										html += `<span>${def.synonyms.join(', ')}</span>`;
+										html += '</div>';
+									}
+
+									html += '</li>';
+								});
+								html += '</ol>';
+							} else {
+								html += '<p class="definition">No definitions found.</p>';
+							}
+
+							html += '</div>';
+						});
+					} else {
+						html += '<p class="definition">No definitions found.</p>';
+					}
+
+					html += '</div>';
+					html += '</div>';
+
+					resultsContainer.innerHTML = html;
+					console.log('Results displayed successfully');
+
+					// Auto-play pronunciation
+					if (audioUrl) {
+						setTimeout(() => {
 							const audio = document.getElementById('pronunciation-audio');
 							if (audio) {
-								audio.play();
+								audio.play().catch(error => {
+									console.log('Autoplay prevented by browser policy.');
+									const replayButton = document.getElementById('replay-pronunciation');
+									if (replayButton) {
+										replayButton.classList.add('highlight');
+									}
+								});
 							}
-						});
+						}, 100);
+
+						// Setup replay button
+						const replayButton = document.getElementById('replay-pronunciation');
+						if (replayButton) {
+							replayButton.addEventListener('click', () => {
+								const audio = document.getElementById('pronunciation-audio');
+								if (audio) {
+									audio.play();
+								}
+							});
+						}
 					}
+				} catch (error) {
+					console.error('Error displaying results:', error);
+					this.showError('Error displaying results. Please try again.');
 				}
 			}
 
@@ -725,17 +1487,39 @@
 				return null;
 			}
 
-			showError(message) {
+			showError(message, searchWord = null) {
+				console.error('Error:', message);
 				const resultsContainer = document.getElementById('results');
-				resultsContainer.innerHTML = `<div class="error-card">${message}</div>`;
+				
+				let html = `<div class="error-card">${message}`;
+				
+				// Add Google search option if it's a "word not found" error and we have a search word
+				if (message.includes('Word not found') && searchWord) {
+					const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchWord + ' meaning definition')}`;
+					html += '<div class="error-actions">';
+					html += `<a href="${googleSearchUrl}" target="_blank" class="search-google-btn">`;
+					html += '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">';
+					html += '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>';
+					html += '<polyline points="15,3 21,3 21,9"></polyline>';
+					html += '<line x1="10" y1="14" x2="21" y2="3"></line>';
+					html += '</svg>';
+					html += 'Search on Google';
+					html += '</a>';
+					html += '</div>';
+				}
+				
+				html += '</div>';
+				resultsContainer.innerHTML = html;
 			}
 
 			showLoading(show) {
 				const loading = document.getElementById('loading');
 				if (show) {
 					loading.classList.add('show');
+					console.log('Loading started');
 				} else {
 					loading.classList.remove('show');
+					console.log('Loading finished');
 				}
 			}
 
@@ -800,20 +1584,12 @@
 
 			updateHistoryDisplay() {
 				const history = this.getHistory();
-				const vocabularySection = document.getElementById('vocabulary-section');
-				const historyList = document.getElementById('history-list');
+				const sidebar = document.getElementById('sidebar');
 
-				if (history.length > 0) {
-					vocabularySection.style.display = 'block';
-
-					let html = '';
-					history.forEach(word => {
-						html += `<button class="history-item">${word}</button>`;
-					});
-
-					historyList.innerHTML = html;
+				if (history.length > 0 || this.stats.totalWords > 0) {
+					sidebar.style.display = 'block';
 				} else {
-					vocabularySection.style.display = 'none';
+					sidebar.style.display = 'none';
 				}
 			}
 
@@ -822,14 +1598,462 @@
 				this.updateHistoryDisplay();
 			}
 
-			toggleVocabulary() {
-				const toggleBtn = document.getElementById('vocabulary-toggle');
-				const vocabularyList = document.getElementById('vocabulary-list');
-
-				if (vocabularyList && toggleBtn) {
-					vocabularyList.classList.toggle('hidden');
-					toggleBtn.classList.toggle('active');
+			// Stats Management
+			loadStats() {
+				try {
+					const savedStats = localStorage.getItem('dictionary-stats');
+					if (savedStats) {
+						this.stats = JSON.parse(savedStats);
+					}
+				} catch (error) {
+					console.error('Error loading stats:', error);
 				}
+			}
+
+			saveStats() {
+				try {
+					localStorage.setItem('dictionary-stats', JSON.stringify(this.stats));
+				} catch (error) {
+					console.error('Error saving stats:', error);
+				}
+			}
+
+			updateStats(word) {
+				const today = new Date().toISOString().split('T')[0];
+				const month = today.substring(0, 7);
+
+				// Update total words
+				this.stats.totalWords++;
+
+				// Update daily stats
+				if (!this.stats.dailyStats[today]) {
+					this.stats.dailyStats[today] = [];
+				}
+				this.stats.dailyStats[today].push(word);
+
+				// Update monthly stats
+				if (!this.stats.monthlyStats[month]) {
+					this.stats.monthlyStats[month] = 0;
+				}
+				this.stats.monthlyStats[month]++;
+
+				// Update streak
+				if (this.stats.lastSearchDate) {
+					const lastDate = new Date(this.stats.lastSearchDate);
+					const currentDate = new Date(today);
+					const diffDays = Math.floor((currentDate - lastDate) / (1000 * 60 * 60 * 24));
+
+					if (diffDays === 1) {
+						this.stats.currentStreak++;
+						if (this.stats.currentStreak > this.stats.longestStreak) {
+							this.stats.longestStreak = this.stats.currentStreak;
+						}
+					} else if (diffDays > 1) {
+						this.stats.currentStreak = 1;
+					}
+				} else {
+					this.stats.currentStreak = 1;
+				}
+
+				this.stats.lastSearchDate = today;
+				this.stats.todayWords = this.stats.dailyStats[today].length;
+
+				this.saveStats();
+				this.updateStatsDisplay();
+			}
+
+			updateStatsDisplay() {
+				try {
+					// Update stats values
+					document.getElementById('total-words').textContent = this.stats.totalWords || 0;
+					document.getElementById('current-streak').textContent = this.stats.currentStreak || 0;
+					document.getElementById('longest-streak').textContent = this.stats.longestStreak || 0;
+					document.getElementById('today-words').textContent = this.stats.todayWords || 0;
+
+					// Show/hide sidebar based on whether there are any stats or history
+					const sidebar = document.getElementById('sidebar');
+					const hasStats = this.stats.totalWords > 0;
+					const hasHistory = this.getHistory().length > 0;
+					
+					if (hasStats || hasHistory) {
+						sidebar.style.display = 'block';
+					} else {
+						sidebar.style.display = 'none';
+					}
+				} catch (error) {
+					console.error('Error updating stats display:', error);
+				}
+			}
+
+			updateMonthlyChart() {
+				// Monthly chart functionality removed
+			}
+
+			// Flashcard functionality
+			startFlashcards() {
+				const history = this.getHistory();
+				if (history.length === 0) {
+					alert('No words in history to create flashcards');
+					return;
+				}
+
+				this.flashcardWords = [...history];
+				this.currentCardIndex = 0;
+				this.flashcardDefinitions = {}; // Cache definitions
+				this.preloadFlashcardDefinitions();
+				this.showCurrentCard();
+				document.getElementById('flashcard-modal').classList.add('show');
+			}
+
+			closeFlashcards() {
+				document.getElementById('flashcard-modal').classList.remove('show');
+				this.flashcardWords = null;
+				this.flashcardDefinitions = {};
+				this.currentCardIndex = 0;
+			}
+
+			async preloadFlashcardDefinitions() {
+				// Preload definitions for better performance
+				const promises = this.flashcardWords.map(async (word) => {
+					if (!this.flashcardDefinitions[word]) {
+						try {
+							const results = await this.fetchDefinition(word);
+							if (results && results.length > 0) {
+								this.flashcardDefinitions[word] = results[0];
+							}
+						} catch (error) {
+							console.error(`Error preloading definition for ${word}:`, error);
+						}
+					}
+				});
+
+				await Promise.all(promises);
+			}
+
+			showCurrentCard() {
+				if (!this.flashcardWords || this.currentCardIndex >= this.flashcardWords.length) return;
+
+				const word = this.flashcardWords[this.currentCardIndex];
+				const entry = this.flashcardDefinitions[word];
+				const googleContainer = document.getElementById('flashcard-google-container');
+				const googleLink = document.getElementById('flashcard-google-link');
+
+				if (entry) {
+					document.getElementById('flashcard-word').textContent = entry.word;
+					document.getElementById('flashcard-phonetic').textContent = entry.phonetic || '';
+					document.getElementById('flashcard-definition').textContent = 
+						entry.meanings[0]?.definitions[0]?.definition || 'No definition available';
+					googleContainer.style.display = 'none';
+				} else {
+					// Show word and loading state
+					document.getElementById('flashcard-word').textContent = word;
+					document.getElementById('flashcard-phonetic').textContent = '';
+					document.getElementById('flashcard-definition').textContent = 'Loading definition...';
+					googleContainer.style.display = 'none';
+					
+					this.fetchDefinition(word).then(results => {
+						if (results && results.length > 0) {
+							const entry = results[0];
+							this.flashcardDefinitions[word] = entry;
+							// Update display if still on the same card
+							if (this.flashcardWords[this.currentCardIndex] === word) {
+								document.getElementById('flashcard-word').textContent = entry.word;
+								document.getElementById('flashcard-phonetic').textContent = entry.phonetic || '';
+								document.getElementById('flashcard-definition').textContent = 
+									entry.meanings[0]?.definitions[0]?.definition || 'No definition available';
+								googleContainer.style.display = 'none';
+							}
+						} else {
+							// Word not found - show Google search option
+							if (this.flashcardWords[this.currentCardIndex] === word) {
+								document.getElementById('flashcard-definition').textContent = '';
+								const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(word + ' meaning definition')}`;
+								googleLink.href = googleSearchUrl;
+								googleContainer.style.display = 'block';
+							}
+						}
+					}).catch(error => {
+						// Error fetching - show Google search option
+						if (this.flashcardWords[this.currentCardIndex] === word) {
+							document.getElementById('flashcard-definition').textContent = '';
+							const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(word + ' meaning definition')}`;
+							googleLink.href = googleSearchUrl;
+							googleContainer.style.display = 'block';
+						}
+					});
+				}
+			}
+
+			showPreviousCard() {
+				if (this.currentCardIndex > 0) {
+					this.currentCardIndex--;
+					this.showCurrentCard();
+				}
+			}
+
+			showNextCard() {
+				if (this.currentCardIndex < this.flashcardWords.length - 1) {
+					this.currentCardIndex++;
+					this.showCurrentCard();
+				}
+			}
+
+			resetAllStats() {
+				const confirmed = confirm('Are you sure you want to reset all statistics and vocabulary history? This action cannot be undone.');
+				
+				if (confirmed) {
+					// Reset stats
+					this.stats = {
+						totalWords: 0,
+						currentStreak: 0,
+						longestStreak: 0,
+						todayWords: 0,
+						lastSearchDate: null,
+						monthlyStats: {},
+						dailyStats: {}
+					};
+					
+					// Clear history
+					this.saveHistory([]);
+					
+					// Save empty stats
+					this.saveStats();
+					
+					// Update displays
+					this.updateStatsDisplay();
+					this.updateHistoryDisplay();
+					
+					// Close modal after reset
+					this.closeStatsModal();
+				}
+			}
+
+			toggleStatsModal() {
+				const statsModal = document.getElementById('stats-modal');
+				statsModal.classList.toggle('show');
+			}
+
+			closeStatsModal() {
+				const statsModal = document.getElementById('stats-modal');
+				statsModal.classList.remove('show');
+			}
+
+			showWelcomeIfFirstVisit() {
+				const hasVisited = localStorage.getItem('dictionary-has-visited');
+				if (!hasVisited) {
+					this.showWelcome();
+					localStorage.setItem('dictionary-has-visited', 'true');
+				}
+			}
+
+			showWelcome() {
+				const resultsContainer = document.getElementById('results');
+				const container = document.getElementById('main-container');
+				
+				let html = '<div class="welcome-container">';
+				html += '<div class="welcome-card">';
+				html += '<div class="welcome-header">';
+				html += '<h2 class="welcome-title">No Fluff Dictionary</h2>';
+				html += '<span class="phonetic">/noʊ flʌf ˈdɪkʃəˌnɛri/</span>';
+				html += '</div>';
+
+				html += '<div class="welcome-section">';
+				html += '<p class="welcome-description">';
+				html += 'Every other dictionary app is bloated. I wanted something clean, fast, and minimal for my focused reading sessions.';
+				html += '</p>';
+				html += '<p class="welcome-description">';
+				html += 'Everything stays local on your browser.';
+				html += '</p>';
+				
+				html += '<p style="margin-top: 1.5rem; text-align: center;">';
+				html += '<a href="https://github.com/me-heer/go-dict" target="_blank" class="repo-link">';
+				html += 'View on GitHub';
+				html += '</a>';
+				html += '</p>';
+
+				html += '</div>';
+				html += '</div>';
+				html += '</div>';
+
+				resultsContainer.innerHTML = html;
+				container.classList.add('has-results');
+			}
+
+			exportWordsToCSV() {
+				const history = this.getHistory();
+				if (history.length === 0) {
+					alert('No words to export');
+					return;
+				}
+
+				// Create CSV content
+				let csvContent = 'Word,Search Date,Search Count\n';
+				
+				// Count occurrences of each word across all daily stats
+				const wordCounts = {};
+				const wordDates = {};
+				
+				Object.keys(this.stats.dailyStats).forEach(date => {
+					this.stats.dailyStats[date].forEach(word => {
+						wordCounts[word] = (wordCounts[word] || 0) + 1;
+						if (!wordDates[word]) {
+							wordDates[word] = date;
+						}
+					});
+				});
+
+				// Add words from history (including those not in daily stats)
+				history.forEach(word => {
+					if (!wordCounts[word]) {
+						wordCounts[word] = 1;
+						wordDates[word] = new Date().toISOString().split('T')[0];
+					}
+				});
+
+				// Generate CSV rows
+				Object.keys(wordCounts).forEach(word => {
+					const date = wordDates[word] || new Date().toISOString().split('T')[0];
+					const count = wordCounts[word];
+					csvContent += `"${word}","${date}",${count}\n`;
+				});
+
+				// Create and download file
+				const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				link.setAttribute('href', url);
+				link.setAttribute('download', `dictionary-words-${new Date().toISOString().split('T')[0]}.csv`);
+				link.style.visibility = 'hidden';
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+			}
+
+			viewWordsInNewTab() {
+				const history = this.getHistory();
+				if (history.length === 0) {
+					alert('No words to view');
+					return;
+				}
+
+				// Create HTML content for new tab
+				let htmlContent = `
+				<!DOCTYPE html>
+				<html lang="en">
+				<head>
+					<meta charset="UTF-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<title>Dictionary Words - No Fluff Dictionary</title>
+					<style>
+						body {
+							font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", sans-serif;
+							line-height: 1.6;
+							color: #333;
+							max-width: 800px;
+							margin: 0 auto;
+							padding: 2rem;
+							background-color: #f8f9fa;
+						}
+						.header {
+							text-align: center;
+							margin-bottom: 2rem;
+							padding-bottom: 1rem;
+							border-bottom: 2px solid #007aff;
+						}
+						.header h1 {
+							color: #007aff;
+							margin-bottom: 0.5rem;
+						}
+						.stats {
+							background: white;
+							padding: 1rem;
+							border-radius: 8px;
+							margin-bottom: 2rem;
+							box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+						}
+						.word-list {
+							background: white;
+							padding: 1.5rem;
+							border-radius: 8px;
+							box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+						}
+						.word-item {
+							padding: 0.75rem;
+							border-bottom: 1px solid #eee;
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+						}
+						.word-item:last-child {
+							border-bottom: none;
+						}
+						.word {
+							font-weight: 600;
+							color: #333;
+						}
+						.word-meta {
+							font-size: 0.9rem;
+							color: #666;
+						}
+						.export-note {
+							text-align: center;
+							margin-top: 2rem;
+							color: #666;
+							font-style: italic;
+						}
+					</style>
+				</head>
+				<body>
+					<div class="header">
+						<h1>Your Dictionary Words</h1>
+						<p>Words searched using No Fluff Dictionary</p>
+					</div>
+					
+					<div class="stats">
+						<h3>Statistics</h3>
+						<p><strong>Total Words:</strong> ${this.stats.totalWords}</p>
+						<p><strong>Unique Words:</strong> ${history.length}</p>
+						<p><strong>Current Streak:</strong> ${this.stats.currentStreak} days</p>
+						<p><strong>Longest Streak:</strong> ${this.stats.longestStreak} days</p>
+					</div>
+					
+					<div class="word-list">
+						<h3>Word List (${history.length} words)</h3>
+				`;
+
+				// Add word counts
+				const wordCounts = {};
+				Object.keys(this.stats.dailyStats).forEach(date => {
+					this.stats.dailyStats[date].forEach(word => {
+						wordCounts[word] = (wordCounts[word] || 0) + 1;
+					});
+				});
+
+				history.forEach((word, index) => {
+					const count = wordCounts[word] || 1;
+					const plural = count === 1 ? 'time' : 'times';
+					htmlContent += `
+						<div class="word-item">
+							<span class="word">${index + 1}. ${word}</span>
+							<span class="word-meta">Searched ${count} ${plural}</span>
+						</div>
+					`;
+				});
+
+				htmlContent += `
+					</div>
+					<div class="export-note">
+						<p>Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+						<p>From <a href="${window.location.href}" target="_blank">No Fluff Dictionary</a></p>
+					</div>
+				</body>
+				</html>
+				`;
+
+				// Open in new tab
+				const newTab = window.open();
+				newTab.document.write(htmlContent);
+				newTab.document.close();
 			}
 		}
 
