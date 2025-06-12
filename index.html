@@ -746,13 +746,17 @@
 			right: 0;
 			bottom: 0;
 			background-color: rgba(0, 0, 0, 0.5);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
 			display: flex;
+			flex-direction: column;
 			justify-content: center;
 			align-items: center;
 			z-index: 1000;
 			opacity: 0;
 			visibility: hidden;
-			transition: opacity 0.2s ease, visibility 0.2s ease;
+			transition: opacity 0.3s ease, visibility 0.3s ease, backdrop-filter 0.3s ease;
+			padding: 2rem;
 		}
 
 		.flashcard-modal.show {
@@ -766,9 +770,14 @@
 			border-radius: 16px;
 			width: 90%;
 			max-width: 500px;
+			min-height: 300px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
 			text-align: center;
 			box-shadow: 0 4px 20px var(--ios-shadow);
 			position: relative;
+			margin-bottom: 1.5rem;
 		}
 
 		.flashcard-word {
@@ -784,11 +793,25 @@
 			margin-bottom: 1.5rem;
 		}
 
+		.flashcard-reveal-hint {
+			font-size: 0.9rem;
+			color: var(--ios-text-secondary);
+			font-style: italic;
+			margin-bottom: 1rem;
+			text-align: center;
+		}
+
 		.flashcard-definition {
 			font-size: 1.1rem;
 			line-height: 1.5;
 			color: var(--ios-text);
 			margin-bottom: 1.5rem;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+
+		.flashcard-content:hover .flashcard-definition {
+			opacity: 1;
 		}
 
 		.flashcard-error {
@@ -817,22 +840,45 @@
 
 		.flashcard-nav {
 			display: flex;
-			justify-content: center;
+			justify-content: space-between;
+			align-items: center;
 			gap: 1rem;
+			width: 90%;
+			max-width: 500px;
 		}
 
 		.flashcard-nav button {
-			padding: 0.5rem 1rem;
-			background-color: var(--ios-input-bg);
-			color: var(--ios-text);
+			padding: 1rem 2rem;
+			background-color: var(--ios-blue);
+			color: white;
 			border: none;
-			border-radius: 8px;
-			font-size: 0.9rem;
+			border-radius: 12px;
+			font-size: 1rem;
+			font-weight: 600;
 			cursor: pointer;
+			min-width: 120px;
+			box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+			transition: all 0.2s ease;
 		}
 
-		.flashcard-nav button:hover {
-			background-color: var(--ios-input-bg-focus);
+		.flashcard-nav button:hover:not(:disabled) {
+			background-color: #0056d6;
+			transform: translateY(-1px);
+			box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+		}
+
+		.flashcard-nav button:active:not(:disabled) {
+			transform: translateY(0);
+			box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+		}
+
+		.flashcard-nav button:disabled {
+			background-color: var(--ios-input-bg);
+			color: var(--ios-text-secondary);
+			opacity: 0.6;
+			cursor: not-allowed;
+			box-shadow: none;
+			transform: none;
 		}
 
 		.flashcard-close {
@@ -845,6 +891,18 @@
 			font-size: 1.5rem;
 			cursor: pointer;
 			padding: 0.5rem;
+		}
+
+		.flashcard-counter {
+			position: absolute;
+			top: 1rem;
+			left: 1rem;
+			background-color: var(--ios-input-bg);
+			color: var(--ios-text-secondary);
+			padding: 0.25rem 0.75rem;
+			border-radius: 20px;
+			font-size: 0.8rem;
+			font-weight: 500;
 		}
 
 		.stats-actions {
@@ -1069,7 +1127,7 @@
 						<path d="m21 21-4.35-4.35"></path>
 					</svg>
 					<input type="text" name="word" id="word-input"
-						placeholder="Search for a word..." autofocus required>
+						placeholder="Type a word and hit enter..." autofocus required>
 				</div>
 			</form>
 
@@ -1095,7 +1153,7 @@
 				<div class="stats-grid">
 					<div class="stat-card">
 						<div class="stat-value" id="total-words">0</div>
-						<div class="stat-label">Total Words</div>
+						<div class="stat-label">Total Words Learned</div>
 					</div>
 					<div class="stat-card">
 						<div class="stat-value" id="current-streak">0</div>
@@ -1107,7 +1165,7 @@
 					</div>
 					<div class="stat-card">
 						<div class="stat-value" id="today-words">0</div>
-						<div class="stat-label">Today's Words</div>
+						<div class="stat-label">Words Learned Today</div>
 					</div>
 				</div>
 				<div class="stats-actions">
@@ -1144,9 +1202,11 @@
 
 		<div id="flashcard-modal" class="flashcard-modal">
 			<div class="flashcard-content">
+				<div class="flashcard-counter" id="flashcard-counter">1 / 1</div>
 				<button class="flashcard-close">&times;</button>
 				<div class="flashcard-word" id="flashcard-word"></div>
 				<div class="flashcard-phonetic" id="flashcard-phonetic"></div>
+				<div class="flashcard-reveal-hint">Hover to reveal definition</div>
 				<div class="flashcard-definition" id="flashcard-definition"></div>
 				<div id="flashcard-google-container" style="text-align: center; display: none;">
 					<div class="flashcard-error">Word not found in dictionary</div>
@@ -1159,10 +1219,10 @@
 						Search on Google
 					</a>
 				</div>
-				<div class="flashcard-nav">
-					<button id="prev-card">Previous</button>
-					<button id="next-card">Next</button>
-				</div>
+			</div>
+			<div class="flashcard-nav">
+				<button id="prev-card">Previous</button>
+				<button id="next-card">Next</button>
 			</div>
 		</div>
 
@@ -1277,6 +1337,18 @@
 							this.closeFlashcards();
 						}
 					}
+
+					// Flashcard navigation with arrow keys
+					const flashcardModal = document.getElementById('flashcard-modal');
+					if (flashcardModal && flashcardModal.classList.contains('show')) {
+						if (event.key === 'ArrowLeft') {
+							event.preventDefault();
+							this.showPreviousCard();
+						} else if (event.key === 'ArrowRight') {
+							event.preventDefault();
+							this.showNextCard();
+						}
+					}
 				});
 
 				// Event delegation for history items
@@ -1314,9 +1386,9 @@
 					this.displayResults(results, query);
 					this.updateLayout();
 				} catch (error) {
-					// Pass the searched word to showError for Google search option
-					if (error.message.includes('Word not found')) {
-						this.showError(error.message, this.lastSearchedWord);
+					// Show a simple message for word not found (Google search already opened)
+					if (error.message.includes('not found in dictionary')) {
+						this.showError(error.message);
 					} else {
 						this.showError(error.message);
 					}
@@ -1336,7 +1408,10 @@
 					console.log('API Response status:', response.status);
 
 					if (response.status === 404) {
-						throw new Error('Word not found. Please check your spelling and try again.');
+						// Word not found - automatically redirect to Google search
+						const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(word + ' meaning definition')}`;
+						window.open(googleSearchUrl, '_blank');
+						throw new Error(`Word "${word}" not found in dictionary. Opened Google search in new tab.`);
 					}
 
 					if (!response.ok) {
@@ -1352,6 +1427,32 @@
 						throw new Error('Network error. Please check your internet connection.');
 					}
 					throw error;
+				}
+			}
+
+			async fetchDefinitionForFlashcard(word) {
+				const apiURL = `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`;
+
+				try {
+					console.log('Fetching definition for flashcard:', word);
+					const response = await fetch(apiURL);
+					console.log('API Response status:', response.status);
+
+					if (response.status === 404) {
+						// For flashcards, just return null instead of opening Google
+						return null;
+					}
+
+					if (!response.ok) {
+						throw new Error(`Failed to fetch dictionary data: ${response.status} ${response.statusText}`);
+					}
+
+					const data = await response.json();
+					console.log('API Response data:', data);
+					return data;
+				} catch (error) {
+					console.error('Error fetching definition for flashcard:', error);
+					return null;
 				}
 			}
 
@@ -1717,7 +1818,7 @@
 				const promises = this.flashcardWords.map(async (word) => {
 					if (!this.flashcardDefinitions[word]) {
 						try {
-							const results = await this.fetchDefinition(word);
+							const results = await this.fetchDefinitionForFlashcard(word);
 							if (results && results.length > 0) {
 								this.flashcardDefinitions[word] = results[0];
 							}
@@ -1738,6 +1839,15 @@
 				const googleContainer = document.getElementById('flashcard-google-container');
 				const googleLink = document.getElementById('flashcard-google-link');
 
+				// Update navigation button states and counter
+				const prevButton = document.getElementById('prev-card');
+				const nextButton = document.getElementById('next-card');
+				const counter = document.getElementById('flashcard-counter');
+				
+				prevButton.disabled = this.currentCardIndex === 0;
+				nextButton.disabled = this.currentCardIndex === this.flashcardWords.length - 1;
+				counter.textContent = `${this.currentCardIndex + 1} / ${this.flashcardWords.length}`;
+
 				if (entry) {
 					document.getElementById('flashcard-word').textContent = entry.word;
 					document.getElementById('flashcard-phonetic').textContent = entry.phonetic || '';
@@ -1751,7 +1861,7 @@
 					document.getElementById('flashcard-definition').textContent = 'Loading definition...';
 					googleContainer.style.display = 'none';
 					
-					this.fetchDefinition(word).then(results => {
+					this.fetchDefinitionForFlashcard(word).then(results => {
 						if (results && results.length > 0) {
 							const entry = results[0];
 							this.flashcardDefinitions[word] = entry;
@@ -1771,14 +1881,6 @@
 								googleLink.href = googleSearchUrl;
 								googleContainer.style.display = 'block';
 							}
-						}
-					}).catch(error => {
-						// Error fetching - show Google search option
-						if (this.flashcardWords[this.currentCardIndex] === word) {
-							document.getElementById('flashcard-definition').textContent = '';
-							const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(word + ' meaning definition')}`;
-							googleLink.href = googleSearchUrl;
-							googleContainer.style.display = 'block';
 						}
 					});
 				}
@@ -2005,7 +2107,7 @@
 				</head>
 				<body>
 					<div class="header">
-						<h1>Your Dictionary Words</h1>
+						<h1>Your Vocabulary</h1>
 						<p>Words searched using No Fluff Dictionary</p>
 					</div>
 					
