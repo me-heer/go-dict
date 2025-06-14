@@ -62,7 +62,7 @@
 		}
 
 		.container {
-			max-width: 650px;
+			max-width: 750px;
 			margin: 0 auto;
 			padding: 1.5rem 1rem;
 			min-height: 100vh;
@@ -74,7 +74,7 @@
 
 		.search-section {
 			width: 100%;
-			max-width: 500px;
+			max-width: 600px;
 			text-align: center;
 			margin-bottom: 1rem;
 		}
@@ -203,7 +203,7 @@
 		.welcome-container {
 			margin-top: 1.5rem;
 			width: 100%;
-			max-width: 600px;
+			max-width: 700px;
 			align-self: flex-start;
 		}
 
@@ -297,7 +297,7 @@
 		.results-container {
 			margin-top: 1.5rem;
 			width: 100%;
-			max-width: 600px;
+			max-width: 700px;
 			align-self: flex-start;
 		}
 
@@ -442,7 +442,7 @@
 		/* Vocabulary Section Styles */
 		.vocabulary-section {
 			width: 100%;
-			max-width: 400px;
+			max-width: 500px;
 			margin-top: 0.5rem;
 			margin-bottom: 1rem;
 		}
@@ -550,12 +550,12 @@
 		}
 
 		.container.has-results .search-section {
-			max-width: 600px;
+			max-width: 700px;
 			margin-bottom: 0.5rem;
 		}
 
 		.container.has-results .vocabulary-section {
-			max-width: 600px;
+			max-width: 700px;
 			margin-top: 0.5rem;
 		}
 
@@ -612,12 +612,51 @@
 			.vocabulary-list {
 				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 			}
+
+			.stats-content {
+				box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+			}
+
+			.stats-close {
+				background-color: rgba(118, 118, 128, 0.24);
+			}
+
+			.stats-close:hover {
+				background-color: rgba(118, 118, 128, 0.32);
+			}
+
+			.stat-card {
+				background-color: rgba(118, 118, 128, 0.24);
+				border-color: rgba(84, 84, 88, 0.6);
+			}
+
+			.stats-action-btn {
+				background-color: rgba(118, 118, 128, 0.24);
+				border-color: rgba(84, 84, 88, 0.6);
+			}
+
+			.stats-action-btn:hover {
+				background-color: rgba(118, 118, 128, 0.32);
+			}
+
+			.word-history-sidebar {
+				box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4);
+			}
+
+			.word-history-item {
+				background-color: rgba(118, 118, 128, 0.24);
+				border-color: rgba(84, 84, 88, 0.6);
+			}
+
+			.word-history-item:hover {
+				background-color: rgba(118, 118, 128, 0.32);
+			}
 		}
 
 		/* Statistics Section Styles */
 		.stats-section {
 			width: 100%;
-			max-width: 400px;
+			max-width: 500px;
 			margin-top: 0.5rem;
 			margin-bottom: 1rem;
 		}
@@ -907,13 +946,13 @@
 
 		.stats-actions {
 			display: flex;
-			gap: 1rem;
-			justify-content: center;
-			flex-wrap: wrap;
+			flex-direction: column;
+			gap: 0.75rem;
+			margin-top: 1rem;
 		}
 
 		.stats-action-btn {
-			padding: 0.75rem 1.5rem;
+			padding: 1rem;
 			border: none;
 			border-radius: 12px;
 			font-size: 1rem;
@@ -921,44 +960,57 @@
 			cursor: pointer;
 			display: flex;
 			align-items: center;
+			justify-content: center;
 			gap: 0.5rem;
 			text-decoration: none;
+			transition: all 0.2s ease;
+			background-color: var(--ios-input-bg);
+			color: var(--ios-text);
+			border: 1px solid var(--ios-border);
+			min-height: 52px;
+		}
+
+		.stats-action-btn:hover {
+			background-color: var(--ios-input-bg-focus);
+		}
+
+		.stats-action-btn:active {
+			background-color: var(--ios-blue);
+			color: white;
+			transform: scale(0.98);
 		}
 
 		.flashcard-btn {
 			background-color: var(--ios-blue);
 			color: white;
+			border-color: var(--ios-blue);
 		}
 
 		.flashcard-btn:hover {
 			background-color: #0056d6;
+			border-color: #0056d6;
 		}
 
 		.export-csv-btn {
 			background-color: #34c759;
 			color: white;
+			border-color: #34c759;
 		}
 
 		.export-csv-btn:hover {
 			background-color: #28a745;
-		}
-
-		.view-words-btn {
-			background-color: var(--ios-input-bg);
-			color: var(--ios-text);
-		}
-
-		.view-words-btn:hover {
-			background-color: var(--ios-input-bg-focus);
+			border-color: #28a745;
 		}
 
 		.reset-stats-btn {
 			background-color: var(--ios-red);
 			color: white;
+			border-color: var(--ios-red);
 		}
 
 		.reset-stats-btn:hover {
 			background-color: #cc2e24;
+			border-color: #cc2e24;
 		}
 
 		@media (max-width: 640px) {
@@ -967,10 +1019,24 @@
 				right: 10px;
 			}
 
+			.stats-modal {
+				padding: 0.5rem;
+			}
+
 			.stats-content {
-				width: 95%;
-				max-width: none;
 				padding: 1.5rem;
+				border-radius: 16px;
+				max-height: 90vh;
+			}
+
+			.stats-title {
+				font-size: 1.75rem;
+				margin-bottom: 1.5rem;
+			}
+
+			.stats-close {
+				top: 1rem;
+				right: 1rem;
 			}
 
 			.stats-grid {
@@ -979,14 +1045,145 @@
 				margin-bottom: 1.5rem;
 			}
 
-			.stats-actions {
-				flex-direction: column;
-				gap: 0.75rem;
+			.stat-card {
+				padding: 1.25rem 1rem;
+			}
+
+			.stat-value {
+				font-size: 1.75rem;
 			}
 
 			.stats-action-btn {
-				justify-content: center;
+				padding: 0.875rem 1rem;
+				font-size: 0.95rem;
+				min-height: 48px;
 			}
+
+			/* Hide word history sidebar on mobile */
+			.word-history-sidebar {
+				display: none !important;
+			}
+		}
+
+		/* Word History Sidebar */
+		.word-history-sidebar {
+			position: fixed;
+			top: 0;
+			right: 0;
+			width: 250px;
+			height: 100vh;
+			background-color: var(--ios-card);
+			border-left: 1px solid var(--ios-border);
+			box-shadow: -4px 0 20px var(--ios-shadow);
+			padding: 2rem 1rem 1rem;
+			opacity: 0.3;
+			transition: opacity 0.3s ease;
+			z-index: 50;
+			overflow-y: auto;
+			display: none;
+		}
+
+		.word-history-sidebar:hover {
+			opacity: 1;
+		}
+
+		.word-history-sidebar.show {
+			display: block;
+		}
+
+		.word-history-title {
+			font-size: 1.1rem;
+			font-weight: 600;
+			color: var(--ios-text);
+			margin-bottom: 1rem;
+			text-align: center;
+			opacity: 0.7;
+		}
+
+		.word-history-list {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+
+		.word-history-item {
+			padding: 0.75rem;
+			background-color: var(--ios-input-bg);
+			border: 1px solid var(--ios-border);
+			border-radius: 12px;
+			font-size: 0.9rem;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			text-align: center;
+			opacity: 0.8;
+		}
+
+		.word-history-item:hover {
+			background-color: var(--ios-input-bg-focus);
+			opacity: 1;
+			transform: translateX(-2px);
+		}
+
+		.word-history-item:active {
+			background-color: var(--ios-blue);
+			color: white;
+		}
+
+		.word-history-toggle-section {
+			border-top: 1px solid var(--ios-border);
+			padding-top: 1.5rem;
+			margin-top: 1.5rem;
+		}
+
+		.word-history-toggle-container {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 1rem;
+		}
+
+		.word-history-toggle-label {
+			font-size: 1rem;
+			font-weight: 500;
+			color: var(--ios-text);
+		}
+
+		.word-history-toggle {
+			position: relative;
+			width: 50px;
+			height: 30px;
+			background-color: var(--ios-input-bg);
+			border-radius: 15px;
+			border: none;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		.word-history-toggle.active {
+			background-color: var(--ios-blue);
+		}
+
+		.word-history-toggle::after {
+			content: '';
+			position: absolute;
+			top: 2px;
+			left: 2px;
+			width: 26px;
+			height: 26px;
+			background-color: white;
+			border-radius: 50%;
+			transition: transform 0.3s ease;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		.word-history-toggle.active::after {
+			transform: translateX(20px);
+		}
+
+		.word-history-description {
+			font-size: 0.85rem;
+			color: var(--ios-text-secondary);
+			line-height: 1.4;
 		}
 
 		/* Sidebar Styles */
@@ -995,6 +1192,11 @@
 			bottom: 20px;
 			right: 20px;
 			z-index: 100;
+		}
+
+		/* Ensure sidebar doesn't interfere with content */
+		.container.history-enabled {
+			/* No padding adjustment - let sidebar overlay */
 		}
 
 		.sidebar-tab {
@@ -1031,13 +1233,16 @@
 			right: 0;
 			bottom: 0;
 			background-color: rgba(0, 0, 0, 0.5);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			z-index: 1000;
 			opacity: 0;
 			visibility: hidden;
-			transition: opacity 0.3s ease, visibility 0.3s ease;
+			transition: opacity 0.3s ease, visibility 0.3s ease, backdrop-filter 0.3s ease;
+			padding: 1rem;
 		}
 
 		.stats-modal.show {
@@ -1047,34 +1252,47 @@
 
 		.stats-content {
 			background-color: var(--ios-card);
-			border-radius: 16px;
+			border-radius: 20px;
 			border: 1px solid var(--ios-border);
-			box-shadow: 0 4px 20px var(--ios-shadow);
+			box-shadow: 0 8px 40px var(--ios-shadow);
 			padding: 2rem;
-			width: 90%;
+			width: 100%;
 			max-width: 500px;
-			max-height: 80vh;
+			max-height: 85vh;
 			overflow-y: auto;
 			position: relative;
 		}
 
 		.stats-close {
 			position: absolute;
-			top: 1rem;
-			right: 1rem;
-			background: none;
+			top: 1.25rem;
+			right: 1.25rem;
+			background-color: rgba(142, 142, 147, 0.12);
 			border: none;
-			color: var(--ios-text);
-			font-size: 1.5rem;
+			color: var(--ios-text-secondary);
+			font-size: 1.2rem;
 			cursor: pointer;
 			padding: 0.5rem;
+			border-radius: 50%;
+			width: 32px;
+			height: 32px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: background-color 0.2s ease, color 0.2s ease;
+		}
+
+		.stats-close:hover {
+			background-color: rgba(142, 142, 147, 0.18);
+			color: var(--ios-text);
 		}
 
 		.stats-title {
-			font-size: 1.5rem;
+			font-size: 2rem;
 			font-weight: 700;
+			letter-spacing: -0.5px;
 			color: var(--ios-text);
-			margin-bottom: 1.5rem;
+			margin-bottom: 2rem;
 			text-align: center;
 		}
 
@@ -1087,13 +1305,14 @@
 
 		.stat-card {
 			background-color: var(--ios-input-bg);
-			padding: 1rem;
-			border-radius: 12px;
+			padding: 1.5rem 1rem;
+			border-radius: 16px;
 			text-align: center;
+			border: 1px solid var(--ios-border);
 		}
 
 		.stat-value {
-			font-size: 1.5rem;
+			font-size: 2rem;
 			font-weight: 700;
 			color: var(--ios-blue);
 			margin-bottom: 0.5rem;
@@ -1102,6 +1321,7 @@
 		.stat-label {
 			font-size: 0.9rem;
 			color: var(--ios-text-secondary);
+			font-weight: 500;
 		}
 
 		@media (prefers-color-scheme: dark) {
@@ -1146,6 +1366,13 @@
 			</div>
 		</div>
 
+		<div id="word-history-sidebar" class="word-history-sidebar">
+			<div class="word-history-title">Search History</div>
+			<div id="word-history-list" class="word-history-list">
+				<!-- History items will be dynamically added here -->
+			</div>
+		</div>
+
 		<div id="stats-modal" class="stats-modal">
 			<div class="stats-content">
 				<button class="stats-close" id="stats-close">&times;</button>
@@ -1156,17 +1383,18 @@
 						<div class="stat-label">Total Words Learned</div>
 					</div>
 					<div class="stat-card">
-						<div class="stat-value" id="current-streak">0</div>
-						<div class="stat-label">Current Streak</div>
-					</div>
-					<div class="stat-card">
-						<div class="stat-value" id="longest-streak">0</div>
-						<div class="stat-label">Longest Streak</div>
-					</div>
-					<div class="stat-card">
 						<div class="stat-value" id="today-words">0</div>
 						<div class="stat-label">Words Learned Today</div>
 					</div>
+				</div>
+				<div class="word-history-toggle-section">
+					<div class="word-history-toggle-container">
+						<label class="word-history-toggle-label">Word History</label>
+						<button id="word-history-toggle" class="word-history-toggle"></button>
+					</div>
+					<p class="word-history-description">
+						Show a sidebar with your search history on the right side of the screen. History appears greyed out until you hover over it.
+					</p>
 				</div>
 				<div class="stats-actions">
 					<button id="flashcard-btn" class="stats-action-btn flashcard-btn">
@@ -1237,14 +1465,13 @@
 			constructor() {
 				this.stats = {
 					totalWords: 0,
-					currentStreak: 0,
-					longestStreak: 0,
 					todayWords: 0,
 					lastSearchDate: null,
 					monthlyStats: {},
 					dailyStats: {}
 				};
 				this.lastSearchedWord = null;
+				this.wordHistoryEnabled = false;
 				this.init();
 			}
 
@@ -1252,9 +1479,11 @@
 				this.setupEventListeners();
 				this.loadHistory();
 				this.loadStats();
+				this.loadWordHistorySettings();
 				this.showWelcomeIfFirstVisit();
 				this.focusInput();
 				this.updateStatsDisplay();
+				this.updateWordHistorySidebar();
 			}
 
 			setupEventListeners() {
@@ -1292,6 +1521,11 @@
 				// View words event listener
 				document.getElementById('view-words-btn').addEventListener('click', () => {
 					this.viewWordsInNewTab();
+				});
+
+				// Word history toggle event listener
+				document.getElementById('word-history-toggle').addEventListener('click', () => {
+					this.toggleWordHistory();
 				});
 
 				document.querySelector('.flashcard-close').addEventListener('click', () => {
@@ -1351,9 +1585,25 @@
 					}
 				});
 
+				// Focus textbox when returning to tab
+				window.addEventListener('focus', () => {
+					// Only focus if no modal is open
+					const statsModal = document.getElementById('stats-modal');
+					const flashcardModal = document.getElementById('flashcard-modal');
+					
+					if ((!statsModal || !statsModal.classList.contains('show')) && 
+						(!flashcardModal || !flashcardModal.classList.contains('show'))) {
+						this.focusInput();
+					}
+				});
+
 				// Event delegation for history items
 				document.addEventListener('click', (event) => {
 					if (event.target.classList.contains('history-item')) {
+						const word = event.target.textContent;
+						this.searchWord(word);
+					}
+					if (event.target.classList.contains('word-history-item')) {
 						const word = event.target.textContent;
 						this.searchWord(word);
 					}
@@ -1692,6 +1942,9 @@
 				} else {
 					sidebar.style.display = 'none';
 				}
+
+				// Update word history sidebar
+				this.updateWordHistorySidebar();
 			}
 
 			clearHistory() {
@@ -1738,24 +1991,6 @@
 				}
 				this.stats.monthlyStats[month]++;
 
-				// Update streak
-				if (this.stats.lastSearchDate) {
-					const lastDate = new Date(this.stats.lastSearchDate);
-					const currentDate = new Date(today);
-					const diffDays = Math.floor((currentDate - lastDate) / (1000 * 60 * 60 * 24));
-
-					if (diffDays === 1) {
-						this.stats.currentStreak++;
-						if (this.stats.currentStreak > this.stats.longestStreak) {
-							this.stats.longestStreak = this.stats.currentStreak;
-						}
-					} else if (diffDays > 1) {
-						this.stats.currentStreak = 1;
-					}
-				} else {
-					this.stats.currentStreak = 1;
-				}
-
 				this.stats.lastSearchDate = today;
 				this.stats.todayWords = this.stats.dailyStats[today].length;
 
@@ -1767,8 +2002,6 @@
 				try {
 					// Update stats values
 					document.getElementById('total-words').textContent = this.stats.totalWords || 0;
-					document.getElementById('current-streak').textContent = this.stats.currentStreak || 0;
-					document.getElementById('longest-streak').textContent = this.stats.longestStreak || 0;
 					document.getElementById('today-words').textContent = this.stats.todayWords || 0;
 
 					// Show/hide sidebar based on whether there are any stats or history
@@ -2115,8 +2348,7 @@
 						<h3>Statistics</h3>
 						<p><strong>Total Words:</strong> ${this.stats.totalWords}</p>
 						<p><strong>Unique Words:</strong> ${history.length}</p>
-						<p><strong>Current Streak:</strong> ${this.stats.currentStreak} days</p>
-						<p><strong>Longest Streak:</strong> ${this.stats.longestStreak} days</p>
+						<p><strong>Words Today:</strong> ${this.stats.todayWords}</p>
 					</div>
 					
 					<div class="word-list">
@@ -2156,6 +2388,78 @@
 				const newTab = window.open();
 				newTab.document.write(htmlContent);
 				newTab.document.close();
+			}
+
+			// Word History Management
+			loadWordHistorySettings() {
+				try {
+					const saved = localStorage.getItem('dictionary-word-history-enabled');
+					this.wordHistoryEnabled = saved === 'true';
+					this.updateWordHistoryToggle();
+					this.updateWordHistoryDisplay();
+				} catch (error) {
+					console.error('Error loading word history settings:', error);
+				}
+			}
+
+			saveWordHistorySettings() {
+				try {
+					localStorage.setItem('dictionary-word-history-enabled', this.wordHistoryEnabled.toString());
+				} catch (error) {
+					console.error('Error saving word history settings:', error);
+				}
+			}
+
+			toggleWordHistory() {
+				this.wordHistoryEnabled = !this.wordHistoryEnabled;
+				this.saveWordHistorySettings();
+				this.updateWordHistoryToggle();
+				this.updateWordHistoryDisplay();
+			}
+
+			updateWordHistoryToggle() {
+				const toggle = document.getElementById('word-history-toggle');
+				if (toggle) {
+					if (this.wordHistoryEnabled) {
+						toggle.classList.add('active');
+					} else {
+						toggle.classList.remove('active');
+					}
+				}
+			}
+
+			updateWordHistoryDisplay() {
+				const container = document.getElementById('main-container');
+				const sidebar = document.getElementById('word-history-sidebar');
+
+				if (this.wordHistoryEnabled) {
+					container.classList.add('history-enabled');
+					sidebar.classList.add('show');
+				} else {
+					container.classList.remove('history-enabled');
+					sidebar.classList.remove('show');
+				}
+			}
+
+			updateWordHistorySidebar() {
+				if (!this.wordHistoryEnabled) return;
+
+				const history = this.getHistory();
+				const historyList = document.getElementById('word-history-list');
+				
+				if (!historyList) return;
+
+				if (history.length === 0) {
+					historyList.innerHTML = '<div style="text-align: center; color: var(--ios-text-secondary); font-style: italic; padding: 1rem;">No words searched yet</div>';
+					return;
+				}
+
+				let html = '';
+				history.forEach(word => {
+					html += `<div class="word-history-item">${word}</div>`;
+				});
+
+				historyList.innerHTML = html;
 			}
 		}
 
